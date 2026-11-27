@@ -1,0 +1,702 @@
+[
+  {
+    "id": "web-huy-luu-pho-ga-choi",
+    "placeId": "web-huy-luu-pho-ga-choi",
+    "title": "Huy Lưu - Phở Gà Chọi",
+    "description": "Phở gà chọi thịt dai giòn, nước dùng ngọt thanh.",
+    "price": "35k - 55k",
+    "categoryName": "Quán phở",
+    "categories": [
+      "Quán phở"
+    ],
+    "address": "252 Ngô Gia Tự, Thanh Bình, Ninh Bình",
+    "neighborhood": "Hoa Lư",
+    "city": "Ninh Bình",
+    "state": "Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.250486210105,
+      "lng": 105.978941827071
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=Huy%20L%C6%B0u%20-%20Ph%E1%BB%9F%20G%C3%A0%20Ch%E1%BB%8Di%20252%20Ng%C3%B4%20Gia%20T%E1%BB%B1%2C%20Thanh%20B%C3%ACnh%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "web-co-hoa-bun-canh-rieu",
+    "placeId": "web-co-hoa-bun-canh-rieu",
+    "title": "Cô Hoa - Bún Canh Riêu",
+    "description": "Bún riêu cua, bún canh hương vị đồng quê tại Phố 8.",
+    "price": "25k - 40k",
+    "categoryName": "Bún & Món nước",
+    "categories": [
+      "Bún & Món nước"
+    ],
+    "address": "79 Lương Văn Tụy, Tân Thành, Ninh Bình",
+    "neighborhood": "Hoa Lư",
+    "city": "Ninh Bình",
+    "state": "Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.256164991416,
+      "lng": 105.968851692029
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=C%C3%B4%20Hoa%20-%20B%C3%BAn%20Canh%20Ri%C3%AAu%2079%20L%C6%B0%C6%A1ng%20V%C4%83n%20T%E1%BB%A5y%2C%20T%C3%A2n%20Th%C3%A0nh%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "web-nha-hang-ngoc-hoa-chao-ga-chim-c",
+    "placeId": "web-nha-hang-ngoc-hoa-chao-ga-chim-c",
+    "title": "Nhà Hàng Ngọc Hoa - Cháo Gà & Chim Câu",
+    "description": "Cháo gà, cháo chim câu nhuyễn đậm đà, gà tần, chim tần.",
+    "price": "40k - 120k",
+    "categoryName": "Quán cơm Việt Nam",
+    "categories": [
+      "Quán cơm Việt Nam"
+    ],
+    "address": "169 Lê Đại Hành, Thanh Bình, Ninh Bình",
+    "neighborhood": "Hoa Lư",
+    "city": "Ninh Bình",
+    "state": "Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.251234001597,
+      "lng": 105.976412001055
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=Nh%C3%A0%20H%C3%A0ng%20Ng%E1%BB%8Dc%20Hoa%20-%20Ch%C3%A1o%20G%C3%A0%20%26%20Chim%20C%C3%A2u%20169%20L%C3%AA%20%C4%90%E1%BA%A1i%20H%C3%A0nh%2C%20Thanh%20B%C3%ACnh%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "web-ba-dung-bun-dau-mam-tom",
+    "placeId": "web-ba-dung-bun-dau-mam-tom",
+    "title": "Bà Dung - Bún Đậu Mắm Tôm",
+    "description": "Bún đậu mắm tôm khu Phố 8 giá sinh viên.",
+    "price": "30k - 55k",
+    "categoryName": "Bún & Món nước",
+    "categories": [
+      "Bún & Món nước"
+    ],
+    "address": "2/75 Lương Văn Tụy, Tân Thành, Ninh Bình",
+    "neighborhood": "Hoa Lư",
+    "city": "Ninh Bình",
+    "state": "Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.256164991416,
+      "lng": 105.968851692029
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=B%C3%A0%20Dung%20-%20B%C3%BAn%20%C4%90%E1%BA%ADu%20M%E1%BA%AFm%20T%C3%B4m%202%2F75%20L%C6%B0%C6%A1ng%20V%C4%83n%20T%E1%BB%A5y%2C%20T%C3%A2n%20Th%C3%A0nh%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "web-vang-khe-quan-an-vat-lau",
+    "placeId": "web-vang-khe-quan-an-vat-lau",
+    "title": "Vàng Khè Quán (Ăn Vặt & Lẩu)",
+    "description": "Ăn vặt & lẩu giá mềm khu phố Lương Văn Tụy.",
+    "price": "30k - 120k",
+    "categoryName": "Lẩu & Nướng",
+    "categories": [
+      "Lẩu & Nướng"
+    ],
+    "address": "Lương Văn Tụy, Tân Thành, Ninh Bình",
+    "neighborhood": "Hoa Lư",
+    "city": "Ninh Bình",
+    "state": "Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.256164991416,
+      "lng": 105.968851692029
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=V%C3%A0ng%20Kh%C3%A8%20Qu%C3%A1n%20(%C4%82n%20V%E1%BA%B7t%20%26%20L%E1%BA%A9u)%20L%C6%B0%C6%A1ng%20V%C4%83n%20T%E1%BB%A5y%2C%20T%C3%A2n%20Th%C3%A0nh%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "web-chi-beo-quan-do-an-vat",
+    "placeId": "web-chi-beo-quan-do-an-vat",
+    "title": "Chị Béo Quán (Đồ Ăn Vặt)",
+    "description": "Đồ ăn vặt tổng hợp khu Lương Văn Tụy.",
+    "price": "15k - 45k",
+    "categoryName": "Ăn vặt & Tráng miệng",
+    "categories": [
+      "Ăn vặt & Tráng miệng"
+    ],
+    "address": "Lương Văn Tụy, Tân Thành, Ninh Bình",
+    "neighborhood": "Hoa Lư",
+    "city": "Ninh Bình",
+    "state": "Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.256164991416,
+      "lng": 105.968851692029
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=Ch%E1%BB%8B%20B%C3%A9o%20Qu%C3%A1n%20(%C4%90%E1%BB%93%20%C4%82n%20V%E1%BA%B7t)%20L%C6%B0%C6%A1ng%20V%C4%83n%20T%E1%BB%A5y%2C%20T%C3%A2n%20Th%C3%A0nh%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "web-xanh-quan-drink-fastfood",
+    "placeId": "web-xanh-quan-drink-fastfood",
+    "title": "Xanh Quán - Drink & Fastfood",
+    "description": "Đồ ăn nhanh & đồ uống tụ tập học sinh sinh viên.",
+    "price": "20k - 55k",
+    "categoryName": "Đồ ăn nhanh",
+    "categories": [
+      "Đồ ăn nhanh"
+    ],
+    "address": "75 Hải Thượng Lãn Ông, Nam Thành, Ninh Bình",
+    "neighborhood": "Hoa Lư",
+    "city": "Ninh Bình",
+    "state": "Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.249189781141,
+      "lng": 105.971939333701
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=Xanh%20Qu%C3%A1n%20-%20Drink%20%26%20Fastfood%2075%20H%E1%BA%A3i%20Th%C6%B0%E1%BB%A3ng%20L%C3%A3n%20%C3%94ng%2C%20Nam%20Th%C3%A0nh%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "web-quan-che-bong",
+    "placeId": "web-quan-che-bong",
+    "title": "Quán Chè Bống",
+    "description": "Chè bưởi, chè thái, khúc bạch topping ngập tràn giá sinh viên.",
+    "price": "15k - 35k",
+    "categoryName": "Ăn vặt & Tráng miệng",
+    "categories": [
+      "Ăn vặt & Tráng miệng"
+    ],
+    "address": "79 Trương Định, Thanh Bình, Ninh Bình",
+    "neighborhood": "Hoa Lư",
+    "city": "Ninh Bình",
+    "state": "Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.251112212544,
+      "lng": 105.978285440234
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=Qu%C3%A1n%20Ch%C3%A8%20B%E1%BB%91ng%2079%20Tr%C6%B0%C6%A1ng%20%C4%90%E1%BB%8Bnh%2C%20Thanh%20B%C3%ACnh%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "web-fusang-cha-tra-sua-nuong",
+    "placeId": "web-fusang-cha-tra-sua-nuong",
+    "title": "FuSang Cha - Trà Sữa Nướng",
+    "description": "Trà sữa nướng vị caramel béo thơm, trân châu hoàng kim.",
+    "price": "25k - 50k",
+    "categoryName": "Quán cà phê & Trà",
+    "categories": [
+      "Quán cà phê & Trà"
+    ],
+    "address": "19 Lê Hồng Phong, Đông Thành, Ninh Bình",
+    "neighborhood": "Hoa Lư",
+    "city": "Ninh Bình",
+    "state": "Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.257436484218,
+      "lng": 105.972039497444
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=FuSang%20Cha%20-%20Tr%C3%A0%20S%E1%BB%AFa%20N%C6%B0%E1%BB%9Bng%2019%20L%C3%AA%20H%E1%BB%93ng%20Phong%2C%20%C4%90%C3%B4ng%20Th%C3%A0nh%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "web-mien-luon-ba-phan",
+    "placeId": "web-mien-luon-ba-phan",
+    "title": "Miến Lươn Bà Phấn",
+    "description": "Miến lươn gia truyền lâu đời nhất Ninh Bình.",
+    "price": "40k - 65k",
+    "categoryName": "Bún & Món nước",
+    "categories": [
+      "Bún & Món nước"
+    ],
+    "address": "995 Trần Hưng Đạo, Thanh Bình, Ninh Bình",
+    "neighborhood": "Hoa Lư",
+    "city": "Ninh Bình",
+    "state": "Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.250277416897,
+      "lng": 105.975617396634
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=Mi%E1%BA%BFn%20L%C6%B0%C6%A1n%20B%C3%A0%20Ph%E1%BA%A5n%20995%20Tr%E1%BA%A7n%20H%C6%B0ng%20%C4%90%E1%BA%A1o%2C%20Thanh%20B%C3%ACnh%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "web-quan-banh-canh-bun-ca-57-tran-hu",
+    "placeId": "web-quan-banh-canh-bun-ca-57-tran-hu",
+    "title": "Quán Bánh Canh & Bún Cá 57 Trần Hưng Đạo",
+    "description": "Bánh canh, bún cá đối diện khách sạn Hoa Lư.",
+    "price": "30k - 50k",
+    "categoryName": "Bún & Món nước",
+    "categories": [
+      "Bún & Món nước"
+    ],
+    "address": "57 Trần Hưng Đạo, Tân Thành, Ninh Bình",
+    "neighborhood": "Hoa Lư",
+    "city": "Ninh Bình",
+    "state": "Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.259674703823,
+      "lng": 105.96810536737
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=Qu%C3%A1n%20B%C3%A1nh%20Canh%20%26%20B%C3%BAn%20C%C3%A1%2057%20Tr%E1%BA%A7n%20H%C6%B0ng%20%C4%90%E1%BA%A1o%2057%20Tr%E1%BA%A7n%20H%C6%B0ng%20%C4%90%E1%BA%A1o%2C%20T%C3%A2n%20Th%C3%A0nh%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "web-pho-an-tran-hung-dao",
+    "placeId": "web-pho-an-tran-hung-dao",
+    "title": "Phở An (Trần Hưng Đạo)",
+    "description": "Phở bò truyền thống nước dùng đậm đà.",
+    "price": "35k - 55k",
+    "categoryName": "Quán phở",
+    "categories": [
+      "Quán phở"
+    ],
+    "address": "14 Ngõ 862 Trần Hưng Đạo, Tân Thành, Ninh Bình",
+    "neighborhood": "Hoa Lư",
+    "city": "Ninh Bình",
+    "state": "Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.25843011693,
+      "lng": 105.970943982699
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=Ph%E1%BB%9F%20An%20(Tr%E1%BA%A7n%20H%C6%B0ng%20%C4%90%E1%BA%A1o)%2014%20Ng%C3%B5%20862%20Tr%E1%BA%A7n%20H%C6%B0ng%20%C4%90%E1%BA%A1o%2C%20T%C3%A2n%20Th%C3%A0nh%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "web-hoa-lu-vegan-nha-hang-chay",
+    "placeId": "web-hoa-lu-vegan-nha-hang-chay",
+    "title": "Hoa Lư Vegan - Nhà Hàng Chay",
+    "description": "Nhà hàng chay thanh tịnh ngay trung tâm Lương Văn Thăng.",
+    "price": "45k - 150k",
+    "categoryName": "Nhà hàng chay",
+    "categories": [
+      "Nhà hàng chay"
+    ],
+    "address": "56 Lương Văn Thăng, Đông Thành, Ninh Bình",
+    "neighborhood": "Hoa Lư",
+    "city": "Ninh Bình",
+    "state": "Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.262123015831,
+      "lng": 105.971106004888
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=Hoa%20L%C6%B0%20Vegan%20-%20Nh%C3%A0%20H%C3%A0ng%20Chay%2056%20L%C6%B0%C6%A1ng%20V%C4%83n%20Th%C4%83ng%2C%20%C4%90%C3%B4ng%20Th%C3%A0nh%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "web-bun-moc-to-nhu-dinh-tien-hoang",
+    "placeId": "web-bun-moc-to-nhu-dinh-tien-hoang",
+    "title": "Bún Mọc Tố Như (Đinh Tiên Hoàng)",
+    "description": "Bún mọc nước dùng thanh, viên mọc truyền thống.",
+    "price": "35k - 50k",
+    "categoryName": "Bún & Món nước",
+    "categories": [
+      "Bún & Món nước"
+    ],
+    "address": "74 Đinh Tiên Hoàng, Đông Thành, Ninh Bình",
+    "neighborhood": "Hoa Lư",
+    "city": "Ninh Bình",
+    "state": "Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.263630082022,
+      "lng": 105.974318285461
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=B%C3%BAn%20M%E1%BB%8Dc%20T%E1%BB%91%20Nh%C6%B0%20(%C4%90inh%20Ti%C3%AAn%20Ho%C3%A0ng)%2074%20%C4%90inh%20Ti%C3%AAn%20Ho%C3%A0ng%2C%20%C4%90%C3%B4ng%20Th%C3%A0nh%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "web-hanh-nga-dac-san-cac-mon-vit",
+    "placeId": "web-hanh-nga-dac-san-cac-mon-vit",
+    "title": "Hạnh Nga - Đặc Sản Các Món Vịt",
+    "description": "Chuyên các món về vịt nướng, vịt om sấu, lẩu vịt.",
+    "price": "80k - 200k",
+    "categoryName": "Quán nhậu & Bia",
+    "categories": [
+      "Quán nhậu & Bia"
+    ],
+    "address": "81 Đinh Tiên Hoàng, Đông Thành, Ninh Bình",
+    "neighborhood": "Hoa Lư",
+    "city": "Ninh Bình",
+    "state": "Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.261027291539,
+      "lng": 105.974891020905
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=H%E1%BA%A1nh%20Nga%20-%20%C4%90%E1%BA%B7c%20S%E1%BA%A3n%20C%C3%A1c%20M%C3%B3n%20V%E1%BB%8Bt%2081%20%C4%90inh%20Ti%C3%AAn%20Ho%C3%A0ng%2C%20%C4%90%C3%B4ng%20Th%C3%A0nh%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "web-anh-dang-quan-lau-nuong-khong-kh",
+    "placeId": "web-anh-dang-quan-lau-nuong-khong-kh",
+    "title": "Anh Đăng Quán (Lẩu & Nướng Không Khói)",
+    "description": "Lẩu & nướng không khói khu phố Đinh Tiên Hoàng.",
+    "price": "100k - 220k",
+    "categoryName": "Lẩu & Nướng",
+    "categories": [
+      "Lẩu & Nướng"
+    ],
+    "address": "96 Đinh Tiên Hoàng, Đông Thành, Ninh Bình",
+    "neighborhood": "Hoa Lư",
+    "city": "Ninh Bình",
+    "state": "Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.264448700596,
+      "lng": 105.974079485039
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=Anh%20%C4%90%C4%83ng%20Qu%C3%A1n%20(L%E1%BA%A9u%20%26%20N%C6%B0%E1%BB%9Bng%20Kh%C3%B4ng%20Kh%C3%B3i)%2096%20%C4%90inh%20Ti%C3%AAn%20Ho%C3%A0ng%2C%20%C4%90%C3%B4ng%20Th%C3%A0nh%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "web-hong-kong-quan-dinh-tien-hoang",
+    "placeId": "web-hong-kong-quan-dinh-tien-hoang",
+    "title": "Hong Kong Quán (Đinh Tiên Hoàng)",
+    "description": "Ẩm thực phong cách Hồng Kông & lẩu nướng.",
+    "price": "80k - 200k",
+    "categoryName": "Nhà hàng Việt Nam",
+    "categories": [
+      "Nhà hàng Việt Nam"
+    ],
+    "address": "116 Đinh Tiên Hoàng, Đông Thành, Ninh Bình",
+    "neighborhood": "Hoa Lư",
+    "city": "Ninh Bình",
+    "state": "Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.261520315083,
+      "lng": 105.974908203806
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=Hong%20Kong%20Qu%C3%A1n%20(%C4%90inh%20Ti%C3%AAn%20Ho%C3%A0ng)%20116%20%C4%90inh%20Ti%C3%AAn%20Ho%C3%A0ng%2C%20%C4%90%C3%B4ng%20Th%C3%A0nh%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "web-nem-chua-hoang-giang",
+    "placeId": "web-nem-chua-hoang-giang",
+    "title": "Nem Chua Hoàng Giang",
+    "description": "Nem chua đặc sản & đồ ăn vặt Ninh Bình.",
+    "price": "20k - 80k",
+    "categoryName": "Ăn vặt & Tráng miệng",
+    "categories": [
+      "Ăn vặt & Tráng miệng"
+    ],
+    "address": "15 Đinh Tiên Hoàng, Đông Thành, Ninh Bình",
+    "neighborhood": "Hoa Lư",
+    "city": "Ninh Bình",
+    "state": "Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.260911285999,
+      "lng": 105.975172401394
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=Nem%20Chua%20Ho%C3%A0ng%20Giang%2015%20%C4%90inh%20Ti%C3%AAn%20Ho%C3%A0ng%2C%20%C4%90%C3%B4ng%20Th%C3%A0nh%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "web-nha-hang-pham-van-sinh",
+    "placeId": "web-nha-hang-pham-van-sinh",
+    "title": "Nhà Hàng Phạm Văn Sinh",
+    "description": "Nhà hàng cơm gia đình, đặc sản Ninh Bình.",
+    "price": "80k - 250k",
+    "categoryName": "Nhà hàng Việt Nam",
+    "categories": [
+      "Nhà hàng Việt Nam"
+    ],
+    "address": "107 Hải Thượng Lãn Ông, Nam Thành, Ninh Bình",
+    "neighborhood": "Hoa Lư",
+    "city": "Ninh Bình",
+    "state": "Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.24931110919,
+      "lng": 105.971042302424
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=Nh%C3%A0%20H%C3%A0ng%20Ph%E1%BA%A1m%20V%C4%83n%20Sinh%20107%20H%E1%BA%A3i%20Th%C6%B0%E1%BB%A3ng%20L%C3%A3n%20%C3%94ng%2C%20Nam%20Th%C3%A0nh%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "web-thanh-de-de-nui-ninh-binh",
+    "placeId": "web-thanh-de-de-nui-ninh-binh",
+    "title": "Thành Dê (Dê Núi Ninh Bình)",
+    "description": "Đặc sản dê núi Ninh Bình tại phố Trung Sơn.",
+    "price": "120k - 300k",
+    "categoryName": "Đặc sản Dê & Cơm cháy",
+    "categories": [
+      "Đặc sản Dê & Cơm cháy"
+    ],
+    "address": "68 Ngõ 497 Nguyễn Công Trứ, Ninh Bình",
+    "neighborhood": "Hoa Lư",
+    "city": "Ninh Bình",
+    "state": "Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.247824117657,
+      "lng": 105.990777409631
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=Th%C3%A0nh%20D%C3%AA%20(D%C3%AA%20N%C3%BAi%20Ninh%20B%C3%ACnh)%2068%20Ng%C3%B5%20497%20Nguy%E1%BB%85n%20C%C3%B4ng%20Tr%E1%BB%A9%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "web-lau-nuong-toong-quan",
+    "placeId": "web-lau-nuong-toong-quan",
+    "title": "Lẩu Nướng Toong Quán",
+    "description": "Buffet lẩu nướng giá hợp lý.",
+    "price": "99k - 199k",
+    "categoryName": "Lẩu & Nướng",
+    "categories": [
+      "Lẩu & Nướng"
+    ],
+    "address": "70 Nguyễn Công Trứ, Ninh Bình",
+    "neighborhood": "Hoa Lư",
+    "city": "Ninh Bình",
+    "state": "Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.250480384683,
+      "lng": 105.974522720079
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=L%E1%BA%A9u%20N%C6%B0%E1%BB%9Bng%20Toong%20Qu%C3%A1n%2070%20Nguy%E1%BB%85n%20C%C3%B4ng%20Tr%E1%BB%A9%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "web-ruby-quan-lau-1-nguoi",
+    "placeId": "web-ruby-quan-lau-1-nguoi",
+    "title": "Ruby Quán (Lẩu 1 Người)",
+    "description": "Lẩu 1 người tiện lợi cho sinh viên & dân văn phòng.",
+    "price": "45k - 90k",
+    "categoryName": "Lẩu & Nướng",
+    "categories": [
+      "Lẩu & Nướng"
+    ],
+    "address": "96 Nguyễn Công Trứ, Ninh Bình",
+    "neighborhood": "Hoa Lư",
+    "city": "Ninh Bình",
+    "state": "Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.250480384683,
+      "lng": 105.974522720079
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=Ruby%20Qu%C3%A1n%20(L%E1%BA%A9u%201%20Ng%C6%B0%E1%BB%9Di)%2096%20Nguy%E1%BB%85n%20C%C3%B4ng%20Tr%E1%BB%A9%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "web-nha-hang-hoang-hai",
+    "placeId": "web-nha-hang-hoang-hai",
+    "title": "Nhà Hàng Hoàng Hải",
+    "description": "Dê núi, cơm cháy, gà, hải sản.",
+    "price": "100k - 250k",
+    "categoryName": "Đặc sản Dê & Cơm cháy",
+    "categories": [
+      "Đặc sản Dê & Cơm cháy"
+    ],
+    "address": "62 Trương Hán Siêu, Phúc Thành, Ninh Bình",
+    "neighborhood": "Hoa Lư",
+    "city": "Ninh Bình",
+    "state": "Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.252993907897,
+      "lng": 105.970282901996
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=Nh%C3%A0%20H%C3%A0ng%20Ho%C3%A0ng%20H%E1%BA%A3i%2062%20Tr%C6%B0%C6%A1ng%20H%C3%A1n%20Si%C3%AAu%2C%20Ph%C3%BAc%20Th%C3%A0nh%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "web-quan-mit-sua-chua-mit-an-vat",
+    "placeId": "web-quan-mit-sua-chua-mit-an-vat",
+    "title": "Quán Mít (Sữa Chua Mít & Ăn Vặt)",
+    "description": "Sữa chua mít & đồ ăn vặt giá sinh viên.",
+    "price": "15k - 40k",
+    "categoryName": "Ăn vặt & Tráng miệng",
+    "categories": [
+      "Ăn vặt & Tráng miệng"
+    ],
+    "address": "Ngõ 129 Trương Hán Siêu, Phúc Thành, Ninh Bình",
+    "neighborhood": "Hoa Lư",
+    "city": "Ninh Bình",
+    "state": "Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.251900614357,
+      "lng": 105.970369906151
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=Qu%C3%A1n%20M%C3%ADt%20(S%E1%BB%AFa%20Chua%20M%C3%ADt%20%26%20%C4%82n%20V%E1%BA%B7t)%20Ng%C3%B5%20129%20Tr%C6%B0%C6%A1ng%20H%C3%A1n%20Si%C3%AAu%2C%20Ph%C3%BAc%20Th%C3%A0nh%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "web-naga-mi-cay-7-cap-do-tra-sua",
+    "placeId": "web-naga-mi-cay-7-cap-do-tra-sua",
+    "title": "NaGa - Mì Cay 7 Cấp Độ & Trà Sữa",
+    "description": "Mì cay 7 cấp độ, trà sữa & đồ ăn vặt giới trẻ.",
+    "price": "35k - 65k",
+    "categoryName": "Đồ ăn nhanh",
+    "categories": [
+      "Đồ ăn nhanh"
+    ],
+    "address": "77 Lương Văn Thăng, Đông Thành, Ninh Bình",
+    "neighborhood": "Hoa Lư",
+    "city": "Ninh Bình",
+    "state": "Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.262461393262,
+      "lng": 105.971586623216
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=NaGa%20-%20M%C3%AC%20Cay%207%20C%E1%BA%A5p%20%C4%90%E1%BB%99%20%26%20Tr%C3%A0%20S%E1%BB%AFa%2077%20L%C6%B0%C6%A1ng%20V%C4%83n%20Th%C4%83ng%2C%20%C4%90%C3%B4ng%20Th%C3%A0nh%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "web-bep-nha-huong-beo-bun-dau-che-ho",
+    "placeId": "web-bep-nha-huong-beo-bun-dau-che-ho",
+    "title": "Bếp Nhà Hương Béo (Bún Đậu & Chè Hoa Cau)",
+    "description": "Bún đậu mắm tôm & chè hoa cau truyền thống.",
+    "price": "25k - 50k",
+    "categoryName": "Ăn vặt & Tráng miệng",
+    "categories": [
+      "Ăn vặt & Tráng miệng"
+    ],
+    "address": "65 Nguyễn Thái Học, Tân Thành, Ninh Bình",
+    "neighborhood": "Hoa Lư",
+    "city": "Ninh Bình",
+    "state": "Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.25704328914,
+      "lng": 105.96953029091
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=B%E1%BA%BFp%20Nh%C3%A0%20H%C6%B0%C6%A1ng%20B%C3%A9o%20(B%C3%BAn%20%C4%90%E1%BA%ADu%20%26%20Ch%C3%A8%20Hoa%20Cau)%2065%20Nguy%E1%BB%85n%20Th%C3%A1i%20H%E1%BB%8Dc%2C%20T%C3%A2n%20Th%C3%A0nh%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "web-mi-cay-seoul-ninh-binh",
+    "placeId": "web-mi-cay-seoul-ninh-binh",
+    "title": "Mì Cay SEOUL Ninh Bình",
+    "description": "Mì cay Hàn Quốc 7 cấp độ nhiều topping.",
+    "price": "45k - 75k",
+    "categoryName": "Nhà hàng Hàn Quốc",
+    "categories": [
+      "Nhà hàng Hàn Quốc"
+    ],
+    "address": "979 Trần Hưng Đạo, Hoa Lư, Ninh Bình",
+    "neighborhood": "Hoa Lư",
+    "city": "Ninh Bình",
+    "state": "Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.254522012665,
+      "lng": 105.973061502899
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=M%C3%AC%20Cay%20SEOUL%20Ninh%20B%C3%ACnh%20979%20Tr%E1%BA%A7n%20H%C6%B0ng%20%C4%90%E1%BA%A1o%2C%20Hoa%20L%C6%B0%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "web-chago-tea-cafe-ninh-binh",
+    "placeId": "web-chago-tea-cafe-ninh-binh",
+    "title": "Chago Tea & Café Ninh Bình",
+    "description": "Trà sữa trân châu sợi dai ngon.",
+    "price": "30k - 55k",
+    "categoryName": "Quán cà phê & Trà",
+    "categories": [
+      "Quán cà phê & Trà"
+    ],
+    "address": "32 Đinh Tất Miễn, Đông Thành, Ninh Bình",
+    "neighborhood": "Hoa Lư",
+    "city": "Ninh Bình",
+    "state": "Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.267611988945,
+      "lng": 105.969813515418
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=Chago%20Tea%20%26%20Caf%C3%A9%20Ninh%20B%C3%ACnh%2032%20%C4%90inh%20T%E1%BA%A5t%20Mi%E1%BB%85n%2C%20%C4%90%C3%B4ng%20Th%C3%A0nh%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "web-mien-luon-tam-hien",
+    "placeId": "web-mien-luon-tam-hien",
+    "title": "Miến Lươn Tâm Hiến",
+    "description": "Miến lươn xào thấm vị, nước dùng ngọt thanh.",
+    "price": "35k - 60k",
+    "categoryName": "Bún & Món nước",
+    "categories": [
+      "Bún & Món nước"
+    ],
+    "address": "336 Nguyễn Công Trứ, Ninh Bình",
+    "neighborhood": "Hoa Lư",
+    "city": "Ninh Bình",
+    "state": "Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.250480384683,
+      "lng": 105.974522720079
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=Mi%E1%BA%BFn%20L%C6%B0%C6%A1n%20T%C3%A2m%20Hi%E1%BA%BFn%20336%20Nguy%E1%BB%85n%20C%C3%B4ng%20Tr%E1%BB%A9%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "web-mien-luon-89",
+    "placeId": "web-mien-luon-89",
+    "title": "Miến Lươn 89",
+    "description": "Miến lươn đồng đậm vị khu Nam Thành.",
+    "price": "35k - 55k",
+    "categoryName": "Bún & Món nước",
+    "categories": [
+      "Bún & Món nước"
+    ],
+    "address": "89 Hải Thượng Lãn Ông, Nam Thành, Ninh Bình",
+    "neighborhood": "Hoa Lư",
+    "city": "Ninh Bình",
+    "state": "Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.249242000398,
+      "lng": 105.971460894668
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=Mi%E1%BA%BFn%20L%C6%B0%C6%A1n%2089%2089%20H%E1%BA%A3i%20Th%C6%B0%E1%BB%A3ng%20L%C3%A3n%20%C3%94ng%2C%20Nam%20Th%C3%A0nh%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "web-banh-da-ca-ro-lien-dong",
+    "placeId": "web-banh-da-ca-ro-lien-dong",
+    "title": "Bánh Đa Cá Rô Liên Đồng",
+    "description": "Bánh đa cá rô đồng rán giòn hoặc cá mềm.",
+    "price": "30k - 50k",
+    "categoryName": "Bún & Món nước",
+    "categories": [
+      "Bún & Món nước"
+    ],
+    "address": "94 Hoàng Diệu, Thanh Bình, Ninh Bình",
+    "neighborhood": "Hoa Lư",
+    "city": "Ninh Bình",
+    "state": "Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.254094912789,
+      "lng": 105.981164204879
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=B%C3%A1nh%20%C4%90a%20C%C3%A1%20R%C3%B4%20Li%C3%AAn%20%C4%90%E1%BB%93ng%2094%20Ho%C3%A0ng%20Di%E1%BB%87u%2C%20Thanh%20B%C3%ACnh%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "web-banh-da-ca-ro-tong-truong-binh-m",
+    "placeId": "web-banh-da-ca-ro-tong-truong-binh-m",
+    "title": "Bánh Đa Cá Rô Tổng Trường Bình Minh",
+    "description": "Đặc sản bánh đa cá rô Tổng Trường.",
+    "price": "30k - 50k",
+    "categoryName": "Bún & Món nước",
+    "categories": [
+      "Bún & Món nước"
+    ],
+    "address": "163 Tây Thành, Tân Thành, Ninh Bình",
+    "neighborhood": "Hoa Lư",
+    "city": "Ninh Bình",
+    "state": "Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.255705998398,
+      "lng": 105.965952894635
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=B%C3%A1nh%20%C4%90a%20C%C3%A1%20R%C3%B4%20T%E1%BB%95ng%20Tr%C6%B0%E1%BB%9Dng%20B%C3%ACnh%20Minh%20163%20T%C3%A2y%20Th%C3%A0nh%2C%20T%C3%A2n%20Th%C3%A0nh%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "web-pho-ly-quoc-su-ninh-binh",
+    "placeId": "web-pho-ly-quoc-su-ninh-binh",
+    "title": "Phở Lý Quốc Sư (Ninh Bình)",
+    "description": "Phở bò chuẩn vị Bắc ngay trung tâm Đông Thành.",
+    "price": "45k - 70k",
+    "categoryName": "Quán phở",
+    "categories": [
+      "Quán phở"
+    ],
+    "address": "27 Đinh Tiên Hoàng, Đông Thành, Ninh Bình",
+    "neighborhood": "Hoa Lư",
+    "city": "Ninh Bình",
+    "state": "Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.261268019798,
+      "lng": 105.975037033658
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=Ph%E1%BB%9F%20L%C3%BD%20Qu%E1%BB%91c%20S%C6%B0%20(Ninh%20B%C3%ACnh)%2027%20%C4%90inh%20Ti%C3%AAn%20Ho%C3%A0ng%2C%20%C4%90%C3%B4ng%20Th%C3%A0nh%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "web-pho-bo-18",
+    "placeId": "web-pho-bo-18",
+    "title": "Phở Bò 18",
+    "description": "Phở bò tái chín nước dùng ngọt xương.",
+    "price": "35k - 55k",
+    "categoryName": "Quán phở",
+    "categories": [
+      "Quán phở"
+    ],
+    "address": "373 Hải Thượng Lãn Ông, Phúc Thành, Ninh Bình",
+    "neighborhood": "Hoa Lư",
+    "city": "Ninh Bình",
+    "state": "Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.249636620399,
+      "lng": 105.962739189138
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=Ph%E1%BB%9F%20B%C3%B2%2018%20373%20H%E1%BA%A3i%20Th%C6%B0%E1%BB%A3ng%20L%C3%A3n%20%C3%94ng%2C%20Ph%C3%BAc%20Th%C3%A0nh%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "web-huong-huong-quan-banh-cuon-met",
+    "placeId": "web-huong-huong-quan-banh-cuon-met",
+    "title": "Hương Hương Quán (Bánh Cuốn Mẹt)",
+    "description": "Bánh cuốn tráng tay nóng hổi nhân thịt mộc nhĩ.",
+    "price": "25k - 45k",
+    "categoryName": "Bún & Món nước",
+    "categories": [
+      "Bún & Món nước"
+    ],
+    "address": "58 Ngô Quyền, Hoa Lư, Ninh Bình",
+    "neighborhood": "Hoa Lư",
+    "city": "Ninh Bình",
+    "state": "Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.300257,
+      "lng": 105.951488
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=H%C6%B0%C6%A1ng%20H%C6%B0%C6%A1ng%20Qu%C3%A1n%20(B%C3%A1nh%20Cu%E1%BB%91n%20M%E1%BA%B9t)%2058%20Ng%C3%B4%20Quy%E1%BB%81n%2C%20Hoa%20L%C6%B0%2C%20Ninh%20B%C3%ACnh"
+  }
+]
