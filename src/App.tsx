@@ -61,6 +61,7 @@ import {
   classifyRestaurantTastes,
   classifyVenueByPrice,
   computePersonalScore,
+  formatDistance,
   getContrastTextColor,
   getCrispPhotoUrl,
   getEffectivePrice,
@@ -390,6 +391,7 @@ export function App() {
   const [toast, setToast] = useState<string | null>(null);
 
   const [showSearchPanel, setShowSearchPanel] = useState(false);
+  const [searchScope, setSearchScope] = useState<'all' | 'dishes' | 'places'>('all');
   const [showChoicePanel, setShowChoicePanel] = useState(false);
   const [showLayoutPopover, setShowLayoutPopover] = useState(false);
   const [layoutAnchorTop, setLayoutAnchorTop] = useState(112);
@@ -981,8 +983,66 @@ export function App() {
     return allRestaurants.map((r) => {
       const meta = profile.metaById[r.id];
       const rawSections = meta?.customMenuSections?.length ? meta.customMenuSections : r.menuSections || [];
+      const isCustomMenu = Boolean(meta?.customMenuSections?.length);
+      const dishEntries: Array<{
+        dishName: string;
+        foldedName: string;
+        dishPrice?: string;
+        sectionTitle: string;
+        imageUrl?: string;
+        source: 'custom' | 'menu' | 'signature';
+      }> = [];
+      const seenDishFold = new Set<string>();
+      for (const sec of rawSections) {
+        for (const item of sec.items) {
+          const fn = normalizeVietnameseSearch(item.name);
+          if (!fn || seenDishFold.has(fn)) continue;
+          seenDishFold.add(fn);
+          dishEntries.push({
+            dishName: item.name,
+            foldedName: fn,
+            dishPrice: item.price || undefined,
+            sectionTitle: sec.title,
+            imageUrl: item.imageUrl || undefined,
+            source: isCustomMenu ? 'custom' : 'menu',
+          });
+        }
+      }
+      const rawHighlights = meta?.customMenuHighlights?.length
+        ? meta.customMenuHighlights
+        : r.menuHighlights || [];
+      const isCustomHl = Boolean(meta?.customMenuHighlights?.length);
+      for (const hl of rawHighlights) {
+        const fn = normalizeVietnameseSearch(hl.name);
+        if (!fn || seenDishFold.has(fn)) continue;
+        seenDishFold.add(fn);
+        dishEntries.push({
+          dishName: hl.name,
+          foldedName: fn,
+          dishPrice: hl.price || undefined,
+          sectionTitle: 'Món nổi bật',
+          imageUrl: hl.imageUrl || undefined,
+          source: isCustomHl ? 'custom' : 'menu',
+        });
+      }
+      if (dishEntries.length === 0) {
+        const sigCandidates = [r.categoryName, ...(r.categories || []).slice(0, 2)].filter(Boolean);
+        for (const cand of sigCandidates) {
+          const fn = normalizeVietnameseSearch(cand);
+          if (!fn || seenDishFold.has(fn)) continue;
+          seenDishFold.add(fn);
+          dishEntries.push({
+            dishName: cand,
+            foldedName: fn,
+            dishPrice: getEffectivePrice(r, meta?.customPrice) || undefined,
+            sectionTitle: 'Món đặc trưng',
+            imageUrl: r.imageUrl || undefined,
+            source: 'signature',
+          });
+        }
+      }
       const menuDishNames = rawSections.flatMap((sec) => sec.items.map((item) => item.name));
-      const highlightNames = (r.menuHighlights || []).map((h) => h.name);
+      const highlightNames = rawHighlights.map((h) => h.name);
       const allDishNames = [...menuDishNames, ...highlightNames];
       const cleanAddr = (r.address || '').replace(/,?\s*Việt Nam$/i, '').trim();
       const categoryTexts = [r.categoryName, ...(r.categories || []), r.subTitle || ''].filter(Boolean);
@@ -1010,6 +1070,7 @@ export function App() {
         haystack: rawHay,
         foldedHaystack: normalizeVietnameseSearch(rawHay),
         foldedTitle: normalizeVietnameseSearch(r.title),
+        dishEntries,
         allDishNames,
         tagTexts,
         categoryTexts,
@@ -1086,9 +1147,26 @@ export function App() {
     []
   );
 
-  // Instant accent-insensitive & substring search suggestions inside Top Spotlight Search
+  // Instant accent-insensitive & substring search suggestions inside Top Spotlight Search (2-part: Món ăn + Quán ăn)
   const searchPanelResults = useMemo(() => {
-    if (!showSearchPanel) return { total: 0, items: [] as Array<{ r: Restaurant; matchReason: string | null }> };
+    type DishSearchItem = {
+      dishName: string;
+      dishPrice?: string;
+      sectionTitle: string;
+      imageUrl?: string;
+      source: 'custom' | 'menu' | 'signature';
+      r: Restaurant;
+      distKm: number;
+      openState: string;
+    };
+    if (!showSearchPanel) {
+      return {
+        total: 0,
+        items: [] as Array<{ r: Restaurant; matchReason: string | null }>,
+        totalDishes: 0,
+        dishItems: [] as DishSearchItem[],
+      };
+    }
     const rawQ = searchQuery.trim().toLowerCase();
     const foldQ = normalizeVietnameseSearch(searchQuery);
     const pool = restaurantBaseIndex.filter((item) => {
@@ -1102,7 +1180,29 @@ export function App() {
         .sort((a, b) => b.personalScore - a.personalScore)
         .slice(0, hasPriceRangeFilter ? 14 : 10)
         .map((item) => ({ r: item.r, matchReason: null }));
-      return { total: pool.length, items: topDefault };
+      const featuredDishes: DishSearchItem[] = [];
+      for (const item of pool) {
+        if (featuredDishes.length >= 10) break;
+        const explicit = item.dishEntries.find((d) => d.source !== 'signature');
+        const picked = explicit || item.dishEntries[0];
+        if (!picked) continue;
+        featuredDishes.push({
+          dishName: picked.dishName,
+          dishPrice: picked.dishPrice,
+          sectionTitle: picked.sectionTitle,
+          imageUrl: picked.imageUrl,
+          source: picked.source,
+          r: item.r,
+          distKm: item.distKm,
+          openState: item.open.state,
+        });
+      }
+      return {
+        total: pool.length,
+        items: topDefault,
+        totalDishes: featuredDishes.length,
+        dishItems: featuredDishes,
+      };
     }
 
     const matched = pool
@@ -1122,12 +1222,58 @@ export function App() {
 
         return b.personalScore - a.personalScore;
       });
+
+    const dishMatches: DishSearchItem[] = [];
+    for (const item of pool) {
+      for (const d of item.dishEntries) {
+        if (d.foldedName.includes(foldQ)) {
+          dishMatches.push({
+            dishName: d.dishName,
+            dishPrice: d.dishPrice,
+            sectionTitle: d.sectionTitle,
+            imageUrl: d.imageUrl,
+            source: d.source,
+            r: item.r,
+            distKm: item.distKm,
+            openState: item.open.state,
+          });
+        }
+      }
+      // Also match restaurant title if it's a dish-named shop and wasn't added from explicit menu
+      if (
+        item.foldedTitle.includes(foldQ) &&
+        !item.dishEntries.some((d) => d.foldedName.includes(foldQ))
+      ) {
+        dishMatches.push({
+          dishName: item.r.categoryName || item.r.title,
+          dishPrice: getEffectivePrice(item.r, profile.metaById[item.r.id]?.customPrice) || undefined,
+          sectionTitle: 'Món tại quán',
+          imageUrl: item.r.imageUrl || undefined,
+          source: 'signature',
+          r: item.r,
+          distKm: item.distKm,
+          openState: item.open.state,
+        });
+      }
+    }
+    dishMatches.sort((a, b) => {
+      const srcRank = (s: 'custom' | 'menu' | 'signature') => (s === 'custom' ? 2 : s === 'menu' ? 1 : 0);
+      const sr = srcRank(b.source) - srcRank(a.source);
+      if (sr !== 0) return sr;
+      const aExact = a.dishName.toLowerCase().includes(rawQ) ? 1 : 0;
+      const bExact = b.dishName.toLowerCase().includes(rawQ) ? 1 : 0;
+      if (bExact !== aExact) return bExact - aExact;
+      return a.distKm - b.distKm;
+    });
+
     return {
       total: matched.length,
       items: matched.slice(0, 20).map((item) => ({
         r: item.r,
         matchReason: getSearchMatchReason(item, searchQuery, foldQ),
       })),
+      totalDishes: dishMatches.length,
+      dishItems: dishMatches.slice(0, 20),
     };
   }, [
     showSearchPanel,
@@ -1844,7 +1990,7 @@ export function App() {
                 }}
               >
                 <span>
-                  Khớp <strong>{searchPanelResults.total}</strong> quán Ninh Bình
+                  <strong>{searchPanelResults.totalDishes}</strong> món · <strong>{searchPanelResults.total}</strong> quán
                 </span>
                 <button
                   type="button"
@@ -1857,7 +2003,31 @@ export function App() {
                     }
                   }}
                 >
-                  Xem danh sách trên Khám phá
+                  Xem trên Khám phá
+                </button>
+              </div>
+
+              <div className="codovi-seg-toggle" style={{ alignSelf: 'flex-start' }}>
+                <button
+                  type="button"
+                  className={`codovi-seg-btn ${searchScope === 'all' ? 'active' : ''}`}
+                  onClick={() => setSearchScope('all')}
+                >
+                  Tất cả
+                </button>
+                <button
+                  type="button"
+                  className={`codovi-seg-btn ${searchScope === 'dishes' ? 'active' : ''}`}
+                  onClick={() => setSearchScope('dishes')}
+                >
+                  🍜 Món ăn ({searchPanelResults.totalDishes})
+                </button>
+                <button
+                  type="button"
+                  className={`codovi-seg-btn ${searchScope === 'places' ? 'active' : ''}`}
+                  onClick={() => setSearchScope('places')}
+                >
+                  🏪 Quán ăn ({searchPanelResults.total})
                 </button>
               </div>
 
@@ -1893,7 +2063,128 @@ export function App() {
                   gap: 6,
                 }}
               >
-                {searchPanelResults.items.map(({ r, matchReason }) => {
+                {searchScope !== 'places' && searchPanelResults.dishItems.length > 0 && (
+                  <>
+                    <div
+                      style={{
+                        fontSize: 11,
+                        fontWeight: 800,
+                        letterSpacing: '0.03em',
+                        color: 'var(--accent)',
+                        padding: '2px 4px',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                      }}
+                    >
+                      <span>🍜 PHẦN MÓN ĂN ({searchPanelResults.totalDishes})</span>
+                    </div>
+                    {(searchScope === 'all'
+                      ? searchPanelResults.dishItems.slice(0, 6)
+                      : searchPanelResults.dishItems
+                    ).map((d, dIdx) => {
+                      const dThumb = getCrispPhotoUrl(d.imageUrl, 160);
+                      return (
+                        <button
+                          key={`dish-${d.r.id}-${dIdx}-${d.dishName}`}
+                          type="button"
+                          className="lg-pill"
+                          onClick={() => {
+                            setShowSearchPanel(false);
+                            openRestaurant(d.r);
+                          }}
+                          style={{
+                            width: '100%',
+                            justifyContent: 'flex-start',
+                            padding: '7px 9px',
+                            borderRadius: 14,
+                            gap: 10,
+                            minHeight: 52,
+                            textAlign: 'left',
+                          }}
+                        >
+                          <div
+                            style={{
+                              width: 38,
+                              height: 38,
+                              borderRadius: 10,
+                              overflow: 'hidden',
+                              flexShrink: 0,
+                              background: 'rgba(245,158,11,0.16)',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              fontSize: 16,
+                            }}
+                          >
+                            {dThumb ? (
+                              <img
+                                src={dThumb}
+                                alt={d.dishName}
+                                referrerPolicy="no-referrer"
+                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                              />
+                            ) : (
+                              '🍜'
+                            )}
+                          </div>
+                          <div style={{ flex: 1, minWidth: 0 }}>
+                            <div
+                              style={{
+                                fontSize: 13,
+                                fontWeight: 700,
+                                whiteSpace: 'nowrap',
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                              }}
+                            >
+                              {d.dishName}
+                            </div>
+                            <div
+                              style={{
+                                fontSize: 11,
+                                color: 'var(--text-secondary)',
+                                whiteSpace: 'nowrap',
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                              }}
+                            >
+                              {d.source === 'custom'
+                                ? '✨ Tự thêm'
+                                : d.source === 'menu'
+                                ? '📋 Thực đơn'
+                                : '🏷️ Món chính'}{' '}
+                              · {d.r.title} · {formatDistance(d.distKm)}
+                            </div>
+                          </div>
+                          {d.dishPrice && (
+                            <span
+                              className="price-pill-highlight"
+                              style={{ fontSize: 10.5, padding: '2px 7px', flexShrink: 0 }}
+                            >
+                              {d.dishPrice}
+                            </span>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </>
+                )}
+
+                {searchScope !== 'dishes' && searchPanelResults.items.length > 0 && (
+                  <div
+                    style={{
+                      fontSize: 11,
+                      fontWeight: 800,
+                      letterSpacing: '0.03em',
+                      color: 'var(--text-secondary)',
+                      padding: '4px 4px 2px',
+                    }}
+                  >
+                    🏪 PHẦN QUÁN ĂN ({searchPanelResults.total})
+                  </div>
+                )}
+
+                {searchScope !== 'dishes' && searchPanelResults.items.map(({ r, matchReason }) => {
                   const thumb = getCrispPhotoUrl(r.imageUrl, 200);
                   const effPrice = getEffectivePrice(r, profile.metaById[r.id]?.customPrice);
                   return (
@@ -1993,7 +2284,12 @@ export function App() {
                     </button>
                   );
                 })}
-                {searchQuery.trim() && searchPanelResults.items.length === 0 && (
+                {searchQuery.trim() &&
+                  ((searchScope === 'dishes' && searchPanelResults.dishItems.length === 0) ||
+                    (searchScope === 'places' && searchPanelResults.items.length === 0) ||
+                    (searchScope === 'all' &&
+                      searchPanelResults.items.length === 0 &&
+                      searchPanelResults.dishItems.length === 0)) && (
                   <div
                     style={{
                       padding: '12px 10px',
