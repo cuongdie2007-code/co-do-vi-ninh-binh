@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-const restaurantsPath = path.resolve('src/data/restaurants.json');
+const restaurantsPath = path.resolve('public/data/restaurants.json');
 const outDir = path.resolve('data-tools');
 fs.mkdirSync(outDir, { recursive: true });
 

@@ -204,6 +204,18 @@ function googleMapsResolverPlugin(): Plugin {
 
 export default defineConfig({
   plugins: [react(), googleMapsResolverPlugin()],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (!id.includes('node_modules')) return;
+          if (id.includes('firebase') || id.includes('@firebase')) return 'firebase';
+          if (id.includes('react-dom') || id.includes('/react/') || id.includes('\\react\\')) return 'react-vendor';
+          if (id.includes('lucide-react')) return 'icons';
+        },
+      },
+    },
+  },
   server: {
     port: 5173,
     host: true,

@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-const basePath = path.resolve('src/data/restaurants.json');
+const basePath = path.resolve('public', 'data', 'restaurants.json');
 const defaultInputPath = path.resolve('data-tools/apify-full.json');
 
 const argInputIdx = process.argv.indexOf('--input');
@@ -213,11 +213,9 @@ for (const raw of incoming) {
 const backupDir = path.resolve('data-tools');
 fs.mkdirSync(backupDir, { recursive: true });
 fs.writeFileSync(path.join(backupDir, 'restaurants.backup.json'), JSON.stringify(existing, null, 2), 'utf8');
-const serializedOutput = JSON.stringify(result, null, 2) + '\n';
+const serializedOutput = JSON.stringify(result);
+fs.mkdirSync(path.dirname(basePath), { recursive: true });
 fs.writeFileSync(basePath, serializedOutput, 'utf8');
-const publicDataPath = path.resolve('public', 'data', 'restaurants.json');
-fs.mkdirSync(path.dirname(publicDataPath), { recursive: true });
-fs.writeFileSync(publicDataPath, serializedOutput, 'utf8');
 
 console.log(`Merge hoan tat!`);
 console.log(`- Tong quan sau gop: ${result.length} (Cap nhat quan goc: ${updatedCount}, Them moi: ${addedCount})`);
