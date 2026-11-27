@@ -1,0 +1,260 @@
+[
+  {
+    "id": "pho8-banh-mi-ngoc",
+    "placeId": "pho8-banh-mi-ngoc",
+    "title": "Bánh Mì Ngọc",
+    "price": "15k - 30k",
+    "categoryName": "Bánh mì & Xôi",
+    "categories": [
+      "Bánh mì & Xôi",
+      "Phố 8 Ăn vặt"
+    ],
+    "address": "25 Đường Trần Phú, Phúc Thành, Hoa Lư, Ninh Bình",
+    "neighborhood": "Phố 8 · Tân Thành",
+    "city": "Ninh Bình",
+    "state": "Phố 8, Hoa Lư, Ninh Bình",
+    "phone": "+84946110138",
+    "phoneUnformatted": "+84946110138",
+    "location": {
+      "lat": 20.2524206,
+      "lng": 105.9731132
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=B%C3%A1nh%20M%C3%AC%20Ng%E1%BB%8Dc%2025%20%C4%90%C6%B0%E1%BB%9Dng%20Tr%E1%BA%A7n%20Ph%C3%BA%2C%20Ph%C3%BAc%20Th%C3%A0nh%2C%20Hoa%20L%C6%B0%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "pho8-lo-banh-mi-da-nang",
+    "placeId": "pho8-lo-banh-mi-da-nang",
+    "title": "Lò Bánh Mì Đà Nẵng",
+    "price": "15k - 30k",
+    "categoryName": "Bánh mì & Xôi",
+    "categories": [
+      "Bánh mì & Xôi",
+      "Phố 8 Ăn vặt"
+    ],
+    "address": "112 Ngõ 81 Đường Lê Đại Hành, Thanh Bình, Hoa Lư, Ninh Bình",
+    "neighborhood": "Phố 8 · Tân Thành",
+    "city": "Ninh Bình",
+    "state": "Phố 8, Hoa Lư, Ninh Bình",
+    "phone": "",
+    "phoneUnformatted": "",
+    "location": {
+      "lat": 20.253698,
+      "lng": 105.978237
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=L%C3%B2%20B%C3%A1nh%20M%C3%AC%20%C4%90%C3%A0%20N%E1%BA%B5ng%20112%20Ng%C3%B5%2081%20%C4%90%C6%B0%E1%BB%9Dng%20L%C3%AA%20%C4%90%E1%BA%A1i%20H%C3%A0nh%2C%20Thanh%20B%C3%ACnh%2C%20Hoa%20L%C6%B0%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "pho8-banh-mi-minh-duc",
+    "placeId": "pho8-banh-mi-minh-duc",
+    "title": "Bánh Mì Minh Đức",
+    "price": "15k - 30k",
+    "categoryName": "Bánh mì & Xôi",
+    "categories": [
+      "Bánh mì & Xôi",
+      "Phố 8 Ăn vặt"
+    ],
+    "address": "Đường Trần Hưng Đạo, Tân Thành, Hoa Lư, Ninh Bình",
+    "neighborhood": "Phố 8 · Tân Thành",
+    "city": "Ninh Bình",
+    "state": "Phố 8, Hoa Lư, Ninh Bình",
+    "phone": "",
+    "phoneUnformatted": "",
+    "location": {
+      "lat": 20.2605535,
+      "lng": 105.9699735
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=B%C3%A1nh%20M%C3%AC%20Minh%20%C4%90%E1%BB%A9c%20%C4%90%C6%B0%E1%BB%9Dng%20Tr%E1%BA%A7n%20H%C6%B0ng%20%C4%90%E1%BA%A1o%2C%20T%C3%A2n%20Th%C3%A0nh%2C%20Hoa%20L%C6%B0%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "pho8-banh-mi-bao-khue",
+    "placeId": "pho8-banh-mi-bao-khue",
+    "title": "Bánh Mì Bảo Khuê",
+    "price": "15k - 30k",
+    "categoryName": "Bánh mì & Xôi",
+    "categories": [
+      "Bánh mì & Xôi",
+      "Phố 8 Ăn vặt"
+    ],
+    "address": "Ngõ 197 Đường Đinh Tiên Hoàng, Đông Thành, Hoa Lư, Ninh Bình",
+    "neighborhood": "Phố 8 · Tân Thành",
+    "city": "Ninh Bình",
+    "state": "Phố 8, Hoa Lư, Ninh Bình",
+    "phone": "+842293897571",
+    "phoneUnformatted": "+842293897571",
+    "location": {
+      "lat": 20.2639808,
+      "lng": 105.9734613
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=B%C3%A1nh%20M%C3%AC%20B%E1%BA%A3o%20Khu%C3%AA%20Ng%C3%B5%20197%20%C4%90%C6%B0%E1%BB%9Dng%20%C4%90inh%20Ti%C3%AAn%20Ho%C3%A0ng%2C%20%C4%90%C3%B4ng%20Th%C3%A0nh%2C%20Hoa%20L%C6%B0%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "pho8-banh-mi-nhat-thuy",
+    "placeId": "pho8-banh-mi-nhat-thuy",
+    "title": "Bánh Mì Nhật Thủy",
+    "price": "15k - 30k",
+    "categoryName": "Bánh mì & Xôi",
+    "categories": [
+      "Bánh mì & Xôi",
+      "Phố 8 Ăn vặt"
+    ],
+    "address": "32 Đường Đinh Tiên Hoàng, Đông Thành, Hoa Lư, Ninh Bình",
+    "neighborhood": "Phố 8 · Tân Thành",
+    "city": "Ninh Bình",
+    "state": "Phố 8, Hoa Lư, Ninh Bình",
+    "phone": "+84914768656",
+    "phoneUnformatted": "+84914768656",
+    "location": {
+      "lat": 20.2614251,
+      "lng": 105.9750421
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=B%C3%A1nh%20M%C3%AC%20Nh%E1%BA%ADt%20Th%E1%BB%A7y%2032%20%C4%90%C6%B0%E1%BB%9Dng%20%C4%90inh%20Ti%C3%AAn%20Ho%C3%A0ng%2C%20%C4%90%C3%B4ng%20Th%C3%A0nh%2C%20Hoa%20L%C6%B0%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "pho8-lo-banh-mi-manh-cuong",
+    "placeId": "pho8-lo-banh-mi-manh-cuong",
+    "title": "Lò Bánh Mì Mạnh Cường",
+    "price": "15k - 30k",
+    "categoryName": "Bánh mì & Xôi",
+    "categories": [
+      "Bánh mì & Xôi",
+      "Phố 8 Ăn vặt"
+    ],
+    "address": "40 Đường Phúc Thành, Phúc Thành, Hoa Lư, Ninh Bình",
+    "neighborhood": "Phố 8 · Tân Thành",
+    "city": "Ninh Bình",
+    "state": "Phố 8, Hoa Lư, Ninh Bình",
+    "phone": "+84915910366",
+    "phoneUnformatted": "+84915910366",
+    "location": {
+      "lat": 20.253203,
+      "lng": 105.968848
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=L%C3%B2%20B%C3%A1nh%20M%C3%AC%20M%E1%BA%A1nh%20C%C6%B0%E1%BB%9Dng%2040%20%C4%90%C6%B0%E1%BB%9Dng%20Ph%C3%BAc%20Th%C3%A0nh%2C%20Ph%C3%BAc%20Th%C3%A0nh%2C%20Hoa%20L%C6%B0%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "pho8-che-ngon-pho-8",
+    "placeId": "pho8-che-ngon-pho-8",
+    "title": "Chè Ngon Phố 8",
+    "description": "Chè bưởi, chè mít, nếp cẩm mít, chè thập cẩm, bánh mì nướng muối ớt khu Phố 8.",
+    "price": "15k - 35k",
+    "categoryName": "Ăn vặt & Tráng miệng",
+    "categories": [
+      "Ăn vặt & Tráng miệng",
+      "Phố 8 Ăn vặt"
+    ],
+    "address": "43 Cù Chính Lan, Tân Thành, Hoa Lư, Ninh Bình",
+    "neighborhood": "Phố 8 · Tân Thành",
+    "city": "Ninh Bình",
+    "state": "Phố 8, Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.256962110408,
+      "lng": 105.970352807068
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=Ch%C3%A8%20Ngon%20Ph%E1%BB%91%208%2043%20C%C3%B9%20Ch%C3%ADnh%20Lan%2C%20T%C3%A2n%20Th%C3%A0nh%2C%20Hoa%20L%C6%B0%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "pho8-kem-bang-tuyet-pho-8",
+    "placeId": "pho8-kem-bang-tuyet-pho-8",
+    "title": "Kem Băng Tuyết (Phố 8)",
+    "description": "Kem trái cây mát lạnh giá sinh viên ngay trục Cù Chính Lan, Phố 8.",
+    "price": "15k - 40k",
+    "categoryName": "Ăn vặt & Tráng miệng",
+    "categories": [
+      "Ăn vặt & Tráng miệng",
+      "Phố 8 Ăn vặt"
+    ],
+    "address": "91 Cù Chính Lan, Tân Thành, Hoa Lư, Ninh Bình",
+    "neighborhood": "Phố 8 · Tân Thành",
+    "city": "Ninh Bình",
+    "state": "Phố 8, Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.256395493753,
+      "lng": 105.969866908141
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=Kem%20B%C4%83ng%20Tuy%E1%BA%BFt%20(Ph%E1%BB%91%208)%2091%20C%C3%B9%20Ch%C3%ADnh%20Lan%2C%20T%C3%A2n%20Th%C3%A0nh%2C%20Hoa%20L%C6%B0%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "pho8-bun-canh-pho-8",
+    "placeId": "pho8-bun-canh-pho-8",
+    "title": "Bún Canh Phố 8",
+    "description": "Đặc sản bún canh sợi to Ninh Bình ăn cùng chả, tép khô, rau muống.",
+    "price": "25k - 40k",
+    "categoryName": "Bún & Món nước",
+    "categories": [
+      "Bún & Món nước",
+      "Phố 8 Ăn vặt"
+    ],
+    "address": "Ngõ 75 Lương Văn Tụy, Tân Thành, Hoa Lư, Ninh Bình",
+    "neighborhood": "Phố 8 · Tân Thành",
+    "city": "Ninh Bình",
+    "state": "Phố 8, Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.25616641634,
+      "lng": 105.969626179882
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=B%C3%BAn%20Canh%20Ph%E1%BB%91%208%20Ng%C3%B5%2075%20L%C6%B0%C6%A1ng%20V%C4%83n%20T%E1%BB%A5y%2C%20T%C3%A2n%20Th%C3%A0nh%2C%20Hoa%20L%C6%B0%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "pho8-banh-xeo-nem-lui-thanh-lua-pho-8",
+    "placeId": "pho8-banh-xeo-nem-lui-thanh-lua-pho-8",
+    "title": "Bánh Xèo Nem Lụi Thành Lụa (Phố 8)",
+    "description": "Bánh xèo giòn rụm cuốn rau sống và nem lụi chấm mắm chua ngọt.",
+    "price": "25k - 50k",
+    "categoryName": "Ăn vặt & Tráng miệng",
+    "categories": [
+      "Ăn vặt & Tráng miệng",
+      "Phố 8 Ăn vặt"
+    ],
+    "address": "Khu ẩm thực Phố 8, Cù Chính Lan, Hoa Lư, Ninh Bình",
+    "neighborhood": "Phố 8 · Tân Thành",
+    "city": "Ninh Bình",
+    "state": "Phố 8, Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.257059214756,
+      "lng": 105.970487671891
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=B%C3%A1nh%20X%C3%A8o%20Nem%20L%E1%BB%A5i%20Th%C3%A0nh%20L%E1%BB%A5a%20(Ph%E1%BB%91%208)%20Khu%20%E1%BA%A9m%20th%E1%BB%B1c%20Ph%E1%BB%91%208%2C%20C%C3%B9%20Ch%C3%ADnh%20Lan%2C%20Hoa%20L%C6%B0%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "pho8-chan-ga-nuong-pho-8",
+    "placeId": "pho8-chan-ga-nuong-pho-8",
+    "title": "Chân Gà Nướng Phố 8",
+    "description": "Chân gà nướng than hoa, ốc luộc, ăn vặt chiều tối đến khuya tại Phố 8.",
+    "price": "25k - 60k",
+    "categoryName": "Ăn vặt & Tráng miệng",
+    "categories": [
+      "Ăn vặt & Tráng miệng",
+      "Phố 8 Ăn vặt"
+    ],
+    "address": "Tuyến ăn vặt Phố 8, Cù Chính Lan, Hoa Lư, Ninh Bình",
+    "neighborhood": "Phố 8 · Tân Thành",
+    "city": "Ninh Bình",
+    "state": "Phố 8, Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.257099489801,
+      "lng": 105.970435704091
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=Ch%C3%A2n%20G%C3%A0%20N%C6%B0%E1%BB%9Bng%20Ph%E1%BB%91%208%20Tuy%E1%BA%BFn%20%C4%83n%20v%E1%BA%B7t%20Ph%E1%BB%91%208%2C%20C%C3%B9%20Ch%C3%ADnh%20Lan%2C%20Hoa%20L%C6%B0%2C%20Ninh%20B%C3%ACnh"
+  },
+  {
+    "id": "pho8-banh-sai-gon-phuc-thanh",
+    "placeId": "pho8-banh-sai-gon-phuc-thanh",
+    "title": "Bánh Sài Gòn (Phúc Thành)",
+    "description": "Quán bánh rán ngọt, bánh mặn giá học sinh sinh viên lâu năm.",
+    "price": "10k - 25k",
+    "categoryName": "Ăn vặt & Tráng miệng",
+    "categories": [
+      "Ăn vặt & Tráng miệng",
+      "Phố 8 Ăn vặt"
+    ],
+    "address": "Đường Trần Phú, Phúc Thành, Hoa Lư, Ninh Bình",
+    "neighborhood": "Phố 8 · Tân Thành",
+    "city": "Ninh Bình",
+    "state": "Phố 8, Hoa Lư, Ninh Bình",
+    "location": {
+      "lat": 20.250692195376,
+      "lng": 105.97164169232
+    },
+    "url": "https://www.google.com/maps/search/?api=1&query=B%C3%A1nh%20S%C3%A0i%20G%C3%B2n%20(Ph%C3%BAc%20Th%C3%A0nh)%20%C4%90%C6%B0%E1%BB%9Dng%20Tr%E1%BA%A7n%20Ph%C3%BA%2C%20Ph%C3%BAc%20Th%C3%A0nh%2C%20Hoa%20L%C6%B0%2C%20Ninh%20B%C3%ACnh"
+  }
+]

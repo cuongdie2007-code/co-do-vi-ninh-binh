@@ -27,6 +27,13 @@ export const NINH_BINH_ANCHORS: AnchorPoint[] = [
     lng: 105.9525,
   },
   {
+    id: 'pho-8-an-vat',
+    name: 'Khu Ăn Vặt Phố 8 (Cù Chính Lan · Lương Văn Tụy)',
+    shortName: 'Phố 8 Ăn vặt',
+    lat: 20.2569,
+    lng: 105.9704,
+  },
+  {
     id: 'pho-co-hoa-lu',
     name: 'Phố Cổ Hoa Lư (Hồ Kỳ Lân)',
     shortName: 'Phố Cổ Hoa Lư',
