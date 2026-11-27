@@ -381,6 +381,8 @@ export function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const deferredSearch = useDeferredValue(searchQuery);
   const [catFilter, setCatFilter] = useState<ExploreCategoryFilter>('all');
+  const [exploreRadiusKm, setExploreRadiusKm] = useState<number | null>(null);
+  const [studentBudgetOnly, setStudentBudgetOnly] = useState(false);
   const [visibleCount, setVisibleCount] = useState<number>(() => profile.glass.pageSize || 20);
 
   const [showTinderModal, setShowTinderModal] = useState(false);
@@ -1308,6 +1310,15 @@ export function App() {
         return false;
       }
 
+      if (exploreRadiusKm !== null && item.distKm > exploreRadiusKm) {
+        return false;
+      }
+      if (studentBudgetOnly) {
+        const tier = classifyVenueByPrice(r, meta?.customPrice).tier;
+        const inBudget = tier === 'low' || matchesPriceSliderRange(r, meta?.customPrice, 0, 60);
+        if (!inBudget) return false;
+      }
+
       if (catFilter === 'open-now') {
         if (!open.isOpenNow) return false;
       } else if (catFilter === 'has-price') {
@@ -1340,6 +1351,8 @@ export function App() {
     searchPriceMinK,
     searchPriceMaxK,
     catFilter,
+    exploreRadiusKm,
+    studentBudgetOnly,
     profile.metaById,
     profile.dietary,
     profile.favoriteTastes,
@@ -2782,6 +2795,29 @@ export function App() {
 
               {/* Quick Venue & Price Filters */}
               <div className="h-scroll-row">
+                <button
+                  type="button"
+                  className={`lg-pill ${studentBudgetOnly ? 'active' : ''}`}
+                  onClick={() => {
+                    setStudentBudgetOnly((v) => !v);
+                    setVisibleCount(pageBatchSize);
+                  }}
+                >
+                  🎓 Sinh viên ≤ 60k
+                </button>
+                {[2, 5].map((rKm) => (
+                  <button
+                    key={`exp-rad-${rKm}`}
+                    type="button"
+                    className={`lg-pill ${exploreRadiusKm === rKm ? 'active' : ''}`}
+                    onClick={() => {
+                      setExploreRadiusKm((prev) => (prev === rKm ? null : rKm));
+                      setVisibleCount(pageBatchSize);
+                    }}
+                  >
+                    📍 &lt; {rKm}km
+                  </button>
+                ))}
                 {(
                   [
                     { key: 'all', label: 'Tất cả' },
