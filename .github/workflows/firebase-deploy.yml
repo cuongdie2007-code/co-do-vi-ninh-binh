@@ -37,10 +37,13 @@ jobs:
           VITE_FIRESTORE_DATABASE_ID: ${{ vars.VITE_FIRESTORE_DATABASE_ID }}
 
       - name: Deploy Firestore Rules & Hosting to Firebase
-        if: ${{ secrets.FIREBASE_SERVICE_ACCOUNT != '' }}
         env:
           SA_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
         run: |
+          if [ -z "$SA_JSON" ]; then
+            echo "Chưa có secret FIREBASE_SERVICE_ACCOUNT — bỏ qua bước deploy (chỉ kiểm tra build)."
+            exit 0
+          fi
           echo "$SA_JSON" > /tmp/firebase-sa.json
           export GOOGLE_APPLICATION_CREDENTIALS=/tmp/firebase-sa.json
           npx --yes firebase-tools@latest deploy --only firestore:rules,hosting --project co-do-vi-ninh-binh --non-interactive
