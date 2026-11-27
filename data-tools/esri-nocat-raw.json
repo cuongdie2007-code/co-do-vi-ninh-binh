@@ -1,0 +1,354 @@
+[
+  {
+    "title": "Nhà Hàng",
+    "addr": "Đường 30 Tháng 6, Ninh Phong, Nam Hoa Lư, Ninh Bình",
+    "type": "Vietnamese Food",
+    "phone": "",
+    "lat": 20.2244173,
+    "lng": 105.9673069
+  },
+  {
+    "title": "Cafe Dream 1989",
+    "addr": "Đường Nguyễn Huệ, Nam Bình, Hoa Lư, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "",
+    "lat": 20.242923,
+    "lng": 105.9721553
+  },
+  {
+    "title": "Cafe Bisiro",
+    "addr": "Đường Hai Mươi Bảy Tháng Bảy, Nam Bình, Hoa Lư, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "",
+    "lat": 20.2428485,
+    "lng": 105.9724408
+  },
+  {
+    "title": "Cafe Pizza Volcano",
+    "addr": "338 Đường Ngô Gia Tự, Nam Bình, Hoa Lư, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "+84-94-5066286",
+    "lat": 20.245315,
+    "lng": 105.97623
+  },
+  {
+    "title": "Café Xưa & Nay",
+    "addr": "Ninh Bình, Hoa Lư, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "",
+    "lat": 20.255501,
+    "lng": 105.973952
+  },
+  {
+    "title": "Café Tràng An",
+    "addr": "Đường Trần Hưng Đạo, Ninh Bình, Hoa Lư, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "",
+    "lat": 20.256866,
+    "lng": 105.971983
+  },
+  {
+    "title": "Café Sáng",
+    "addr": "Đường Phạm Hồng Thái, Ninh Bình, Hoa Lư, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "+84-229-3885046",
+    "lat": 20.2571358,
+    "lng": 105.9748083
+  },
+  {
+    "title": "Cafe",
+    "addr": "16 Đường Trương Định, Thanh Bình, Hoa Lư, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "",
+    "lat": 20.2507136,
+    "lng": 105.9779511
+  },
+  {
+    "title": "Cafe Linh Trang",
+    "addr": "Đường Tỉnh Lộ 478B, Ninh Hải, Nam Hoa Lư, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "",
+    "lat": 20.2156934,
+    "lng": 105.9328347
+  },
+  {
+    "title": "Cafe Chinh Duyên",
+    "addr": "Tỉnh Lộ 491C, Ninh Hải, Nam Hoa Lư, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "",
+    "lat": 20.2166878,
+    "lng": 105.9381137
+  },
+  {
+    "title": "Cafe Thành Trung",
+    "addr": "Tỉnh Lộ 491C, Ninh Hải, Nam Hoa Lư, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "",
+    "lat": 20.2167967,
+    "lng": 105.9388795
+  },
+  {
+    "title": "My Coffee",
+    "addr": "Tam Điệp, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "",
+    "lat": 20.1560471,
+    "lng": 105.9090179
+  },
+  {
+    "title": "Coffee Chợt Nhớ",
+    "addr": "Đường Trần Phú, Tam Điệp, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "",
+    "lat": 20.1606015,
+    "lng": 105.9184391
+  },
+  {
+    "title": "Cafe Phong Lan Quán",
+    "addr": "46 Đường Trần Phú, Tam Điệp, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "+84-96-7167666",
+    "lat": 20.1587187,
+    "lng": 105.9152461
+  },
+  {
+    "title": "Sách Cafe",
+    "addr": "34 Đường Trần Phú, Tam Điệp, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "",
+    "lat": 20.1581156,
+    "lng": 105.9150872
+  },
+  {
+    "title": "Café Galleery",
+    "addr": "106/11 Đường Quang Trung, Tam Điệp, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "+84-229-3771929",
+    "lat": 20.153144,
+    "lng": 105.908951
+  },
+  {
+    "title": "Café Abba",
+    "addr": "42/16 Đường Quang Trung, Tam Điệp, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "",
+    "lat": 20.153588,
+    "lng": 105.910184
+  },
+  {
+    "title": "Milano Coffee",
+    "addr": "Đường Thanh Niên, Tam Điệp, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "",
+    "lat": 20.1554296,
+    "lng": 105.9113033
+  },
+  {
+    "title": "Tran Coffee",
+    "addr": "Đường Vũ Duy Thanh, Tam Điệp, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "",
+    "lat": 20.1604911,
+    "lng": 105.9167183
+  },
+  {
+    "title": "Cafe Hoa Lâm",
+    "addr": "Đường Chi Lăng, Tây Sơn, Tam Điệp, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "",
+    "lat": 20.1481897,
+    "lng": 105.8960192
+  },
+  {
+    "title": "Khánh Cafe",
+    "addr": "Đường Chi Lăng, Tây Sơn, Tam Điệp, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "",
+    "lat": 20.14831,
+    "lng": 105.895967
+  },
+  {
+    "title": "Café Ngọc Anh",
+    "addr": "Đường Quang Trung, Tây Sơn, Tam Điệp, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "",
+    "lat": 20.148877,
+    "lng": 105.897096
+  },
+  {
+    "title": "Nga Thu Coffee",
+    "addr": "Đường Quang Trung, Tây Sơn, Tam Điệp, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "",
+    "lat": 20.1522026,
+    "lng": 105.9065505
+  },
+  {
+    "title": "Café B & T",
+    "addr": "Đường Quang Sơn, Tây Sơn, Tam Điệp, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "",
+    "lat": 20.1509733,
+    "lng": 105.9021706
+  },
+  {
+    "title": "Cafe Vườn Phố Núi",
+    "addr": "Trung Sơn, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "",
+    "lat": 20.150938,
+    "lng": 105.9242082
+  },
+  {
+    "title": "Xưa Và Nay Coffee",
+    "addr": "Đường Cao Bá Quát, Trung Sơn, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "",
+    "lat": 20.153528,
+    "lng": 105.918707
+  },
+  {
+    "title": "Home Coffee",
+    "addr": "Đường Ngọc Hồi, Trung Sơn, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "",
+    "lat": 20.1557038,
+    "lng": 105.9199029
+  },
+  {
+    "title": "Coffee Sky",
+    "addr": "Đường Vũ Phạm Khải, Trung Sơn, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "",
+    "lat": 20.1484827,
+    "lng": 105.91849
+  },
+  {
+    "title": "Cafe Hoàng Anh",
+    "addr": "947 Đường Quang Trung, Nam Sơn, Trung Sơn, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "",
+    "lat": 20.1462843,
+    "lng": 105.8931467
+  },
+  {
+    "title": "Coffee Bảo Nhi",
+    "addr": "Đường Thiên Quan, Yên Sơn, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "+84-98-7055033",
+    "lat": 20.1783839,
+    "lng": 105.9027289
+  },
+  {
+    "title": "Cafe Thủy Hằng",
+    "addr": "Đường Lê Trọng Tấn, Yên Thắng, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "",
+    "lat": 20.1516387,
+    "lng": 105.941153
+  },
+  {
+    "title": "Coffee Garden",
+    "addr": "Yên Bình, Yên Thắng, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "",
+    "lat": 20.1711238,
+    "lng": 105.9431422
+  },
+  {
+    "title": "Cafe Phương Chi",
+    "addr": "Đường Quốc Lộ 10, Hùng Tiến, Kim Sơn, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "+84-97-6203635",
+    "lat": 20.1043764,
+    "lng": 106.1150142
+  },
+  {
+    "title": "Cafe Đồng Xanh",
+    "addr": "Đường Quốc Lộ 12B, Lai Thành, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "+84-93-6346648",
+    "lat": 20.0816026,
+    "lng": 106.0411131
+  },
+  {
+    "title": "Cafe Tâm New",
+    "addr": "Đường Quốc Lộ 10, Yên Lộc, Lai Thành, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "",
+    "lat": 20.0880105,
+    "lng": 106.068964
+  },
+  {
+    "title": "Café Bốn Mùa",
+    "addr": "514 Đường Nguyễn Huệ, Ninh Phong, Nam Hoa Lư, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "+84-229-3872197",
+    "lat": 20.230825,
+    "lng": 105.968031
+  },
+  {
+    "title": "Cafe Linh Linh",
+    "addr": "Đường Tỉnh Lộ 480B, Yên Khánh, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "",
+    "lat": 20.1815725,
+    "lng": 106.0635365
+  },
+  {
+    "title": "Cafe Suối Mơ",
+    "addr": "Đường Tỉnh Lộ 480B, Khánh Ninh, Yên Khánh, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "",
+    "lat": 20.1808392,
+    "lng": 106.0630246
+  },
+  {
+    "title": "Cafe Trang Anh",
+    "addr": "Đường Tỉnh Lộ 480B, Khánh Ninh, Yên Khánh, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "",
+    "lat": 20.1809814,
+    "lng": 106.0631662
+  },
+  {
+    "title": "Cafe Minh Cóc",
+    "addr": "Đường Tỉnh Lộ 480C, Khánh Dương, Yên Mô, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "+84-90-6144457",
+    "lat": 20.1856048,
+    "lng": 106.0164831
+  },
+  {
+    "title": "Cafe Nghĩa Nghiệp",
+    "addr": "Đường Tỉnh Lộ 480C, Yên Thịnh, Yên Mô, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "",
+    "lat": 20.1600631,
+    "lng": 106.007808
+  },
+  {
+    "title": "Cafe Nam Thành",
+    "addr": "Đường Tỉnh Lộ 480, Yên Thịnh, Yên Mô, Ninh Bình",
+    "type": "Coffee Shop",
+    "phone": "",
+    "lat": 20.1629943,
+    "lng": 106.0028251
+  },
+  {
+    "title": "Coffee Weasel",
+    "addr": "Quốc Lộ 12B, Yên Trị, Phú Thọ",
+    "type": "Coffee Shop",
+    "phone": "",
+    "lat": 20.3593689,
+    "lng": 105.6596897
+  },
+  {
+    "title": "Cafe Hồng Đông",
+    "addr": "Quốc Lộ 12B, Yên Trị, Phú Thọ",
+    "type": "Coffee Shop",
+    "phone": "",
+    "lat": 20.358856,
+    "lng": 105.673675
+  }
+]
