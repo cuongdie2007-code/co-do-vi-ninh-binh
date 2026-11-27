@@ -1,0 +1,442 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // App: "Cố Đô Vị — Chọn Món Ninh Bình"
+    // Database: codovi-db (Firestore Enterprise)
+    //
+    // Collection: users
+    // Document ID: {userId} (Firebase Auth UID: Email/Password, Google, or Anonymous Guest)
+    // Fields:
+    //   - profile: map (required) - UserProfile preferences & personal metadata
+    //   - updatedAt: timestamp | string (required, ISO <= 40 chars)
+    //   - uid: string (optional, immutable once set, == userId)
+    //
+    // Collection: users/{userId}/restaurants
+    // Document ID: {restaurantId} (matches Restaurant.id)
+    // Fields:
+    //   - id: string (required, immutable, == restaurantId, 1..128 chars)
+    //   - title: string (required, 1..200 chars)
+    //   - categoryName: string (required, 1..100 chars)
+    //   - address: string (required, 1..300 chars)
+    //   - location: map (required, { lat: number [-90..90], lng: number [-180..180] })
+    //   - Optional / nullable fields from Restaurant interface (44 whitelisted keys total)
+    //
+    // Collection: voteRooms
+    // Document ID: {roomId} (matches ^[A-Za-z0-9_-]{4,32}$, equals roomCode)
+    // Fields:
+    //   - roomCode: string (required, immutable, 4..16 chars, == roomId)
+    //   - hostUid: string (required, immutable, == request.auth.uid on create)
+    //   - hostName: string (required, immutable, non-blank 1..60 chars)
+    //   - title: string (required, immutable, non-blank 1..80 chars)
+    //   - status: string (required, 'voting' on create, 'voting' | 'closed' on update; mutable by host only)
+    //   - restaurantIds: list<string> (required, immutable, size 1..40, each 1..128 chars)
+    //   - members: map<uid, displayName> (required, size 1..10, values non-blank 1..60 chars; per-UID update isolation)
+    //   - votesByMember: map<uid, map<restaurantId, 'like' | 'pass'>> (required, size <= 10; per-UID update isolation)
+    //   - winnerId: string | null (optional/nullable, null on create, 1..120 chars in restaurantIds; mutable by host only)
+    //   - createdAt: timestamp | string (required, immutable, ISO 10..40 chars or timestamp)
+    //   - updatedAt: timestamp | string (required, ISO 10..40 chars or timestamp)
+    //
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions (kept compact to stay well under CEL eval budget)
+    // ===============================================================
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function uidUnchanged(userId) {
+      return !('uid' in request.resource.data) ||
+        (request.resource.data.uid is string && request.resource.data.uid == userId);
+    }
+
+    function uidNotModified(userId) {
+      return !('uid' in request.resource.data) ||
+        (request.resource.data.uid is string &&
+         request.resource.data.uid == userId &&
+         (!('uid' in resource.data) || request.resource.data.uid == resource.data.uid));
+    }
+
+    function isValidGeoLocation(loc) {
+      return loc is map &&
+        loc.keys().hasAll(['lat', 'lng']) &&
+        loc.keys().hasOnly(['lat', 'lng']) &&
+        loc.lat is number && loc.lat >= -90 && loc.lat <= 90 &&
+        loc.lng is number && loc.lng >= -180 && loc.lng <= 180;
+    }
+
+    // Allows null, '', http(s):// (<= 2048 chars), or non-SVG data:image/ base64 (<= maxDataLen chars).
+    function isValidImageSource(val, maxDataLen) {
+      return val == null ||
+        (val is string &&
+         (val == '' ||
+          (val.size() >= 8 && val.size() <= 2048 && (val[0:8] == 'https://' || val[0:7] == 'http://')) ||
+          (val.size() >= 22 && val.size() <= maxDataLen && val[0:11] == 'data:image/' && val[0:15] != 'data:image/svg+')));
+    }
+
+    // Allows null, '', or http(s):// URL (<= 2048 chars).
+    function isValidWebUrl(val) {
+      return val == null ||
+        (val is string &&
+         (val == '' || (val.size() >= 8 && val.size() <= 2048 && (val[0:8] == 'https://' || val[0:7] == 'http://'))));
+    }
+
+    function isValidTimestampOrIso(val) {
+      return val is timestamp || (val is string && val.size() >= 10 && val.size() <= 40);
+    }
+
+    // ===============================================================
+    // Domain Validators: User Profile (users/{userId})
+    // ===============================================================
+
+    function isValidCustomTheme(ct) {
+      return ct is map &&
+        ct.keys().hasOnly([
+          'enabled', 'accent', 'accentSecondary',
+          'darkTint', 'lightTint', 'extractedPalette', 'scrimStrength'
+        ]) &&
+        (!('enabled' in ct) || ct.enabled is bool) &&
+        (!('scrimStrength' in ct) || (ct.scrimStrength is number && ct.scrimStrength >= 0 && ct.scrimStrength <= 1)) &&
+        (!('extractedPalette' in ct) || (ct.extractedPalette is list && ct.extractedPalette.size() <= 12));
+    }
+
+    function isValidGlassConfig(g) {
+      return g is map &&
+        g.keys().hasOnly([
+          'blur', 'opacity', 'rimGlow', 'mode', 'dynamicSheen', 'reduceMotion',
+          'cardDensity', 'pageSize', 'fontScale', 'showDistance', 'showRatingBars',
+          'showRating', 'showPrice', 'showOpenStatus', 'mapsApp', 'soundEnabled',
+          'confettiEnabled', 'autoThemeByTime', 'customBgUrl'
+        ]) &&
+        (!('blur' in g) || (g.blur is number && g.blur >= 0 && g.blur <= 100)) &&
+        (!('opacity' in g) || (g.opacity is number && g.opacity >= 0 && g.opacity <= 1)) &&
+        (!('rimGlow' in g) || (g.rimGlow is number && g.rimGlow >= 0 && g.rimGlow <= 1)) &&
+        (!('mode' in g) || g.mode in ['system', 'dark', 'light', 'jade']) &&
+        (!('cardDensity' in g) || g.cardDensity in ['rich', 'compact', 'grid', 'dense']) &&
+        (!('customBgUrl' in g) || isValidImageSource(g.customBgUrl, 650000));
+    }
+
+    function isValidDietaryRules(d) {
+      return d is map &&
+        d.keys().hasOnly([
+          'onlyOpenNow', 'avoidTempClosed', 'vegetarianFocus',
+          'noGoat', 'noSeafood', 'minRating', 'accessibleOnly'
+        ]) &&
+        (!('minRating' in d) || (d.minRating is number && d.minRating >= 0 && d.minRating <= 5));
+    }
+
+    function isValidUserProfile(p) {
+      return p is map &&
+        p.keys().hasOnly([
+          'displayName', 'badgeTitle', 'avatarEmoji', 'avatarPhotoUrl',
+          'customTheme', 'glass', 'favoriteTastes', 'dietary', 'budget',
+          'defaultCompanion', 'anchorId', 'customCoords', 'maxRadiusKm',
+          'metaById', 'collections', 'pickHistory', 'mobilePreviewFrame'
+        ]) &&
+        (!('displayName' in p) || (p.displayName is string && p.displayName.size() <= 80)) &&
+        (!('badgeTitle' in p) || (p.badgeTitle is string && p.badgeTitle.size() <= 100)) &&
+        (!('avatarEmoji' in p) || (p.avatarEmoji is string && p.avatarEmoji.size() <= 32)) &&
+        (!('avatarPhotoUrl' in p) || isValidImageSource(p.avatarPhotoUrl, 350000)) &&
+        (!('customTheme' in p) || p.customTheme == null || isValidCustomTheme(p.customTheme)) &&
+        (!('glass' in p) || isValidGlassConfig(p.glass)) &&
+        (!('favoriteTastes' in p) || (
+          p.favoriteTastes is list &&
+          p.favoriteTastes.size() <= 20 &&
+          p.favoriteTastes.hasOnly([
+            'de-comchay', 'pho-bun-mien', 'com-nieu', 'lau-nuong',
+            'an-dem', 'mon-chay', 'hai-san-ca-ro', 'an-vat-che', 'quoc-te', 'nhau-bia'
+          ])
+        )) &&
+        (!('dietary' in p) || isValidDietaryRules(p.dietary)) &&
+        (!('budget' in p) || p.budget in ['all', 'binh-dan', 'vua-phai', 'tiep-khach']) &&
+        (!('defaultCompanion' in p) || p.defaultCompanion in ['solo', 'couple', 'family', 'friends', 'guests']) &&
+        (!('anchorId' in p) || (p.anchorId is string && p.anchorId.size() > 0 && p.anchorId.size() <= 64)) &&
+        (!('customCoords' in p) || p.customCoords == null || isValidGeoLocation(p.customCoords)) &&
+        (!('maxRadiusKm' in p) || (p.maxRadiusKm is number && p.maxRadiusKm > 0 && p.maxRadiusKm <= 500)) &&
+        (!('metaById' in p) || (p.metaById is map && p.metaById.size() <= 2000)) &&
+        (!('collections' in p) || (p.collections is list && p.collections.size() <= 50)) &&
+        (!('pickHistory' in p) || (p.pickHistory is list && p.pickHistory.size() <= 200)) &&
+        (!('mobilePreviewFrame' in p) || p.mobilePreviewFrame is bool);
+    }
+
+    function isValidUserDoc(data) {
+      return data.keys().hasAll(['profile', 'updatedAt']) &&
+        data.keys().hasOnly(['profile', 'updatedAt', 'uid']) &&
+        isValidTimestampOrIso(data.updatedAt) &&
+        isValidUserProfile(data.profile);
+    }
+
+    // ===============================================================
+    // Domain Validators: User Restaurants (users/{userId}/restaurants/{restaurantId})
+    // ===============================================================
+
+    function isValidRestaurant(data, restaurantId) {
+      return data.keys().hasAll(['id', 'title', 'categoryName', 'address', 'location']) &&
+        data.keys().hasOnly([
+          'id', 'placeId', 'title', 'subTitle', 'description', 'ownerDescription',
+          'price', 'categoryName', 'categories', 'address', 'neighborhood', 'street',
+          'city', 'postalCode', 'state', 'countryCode', 'phone', 'phoneUnformatted',
+          'website', 'location', 'totalScore', 'reviewsCount', 'reviewsDistribution',
+          'imagesCount', 'imageUrl', 'openingHours', 'additionalOpeningHours',
+          'wasOpenAtScrapeTime', 'additionalInfo', 'permanentlyClosed',
+          'temporarilyClosed', 'reserveTableUrl', 'url', 'rank', 'isUserAdded',
+          'createdAt', 'customTags', 'galleryUrls', 'menuImages', 'menuHighlights',
+          'menuSections', 'menuUrl', 'reviews', 'reviewsTags'
+        ]) &&
+        data.id is string && data.id == restaurantId && data.id.size() > 0 && data.id.size() <= 128 &&
+        data.title is string && data.title.size() > 0 && data.title.size() <= 200 &&
+        data.categoryName is string && data.categoryName.size() > 0 && data.categoryName.size() <= 100 &&
+        data.address is string && data.address.size() > 0 && data.address.size() <= 300 &&
+        isValidGeoLocation(data.location) &&
+        (!('description' in data) || data.description == null || (data.description is string && data.description.size() <= 2000)) &&
+        (!('ownerDescription' in data) || data.ownerDescription == null || (data.ownerDescription is string && data.ownerDescription.size() <= 2000)) &&
+        (!('price' in data) || data.price == null || (data.price is string && data.price.size() <= 100)) &&
+        (!('website' in data) || isValidWebUrl(data.website)) &&
+        (!('reserveTableUrl' in data) || isValidWebUrl(data.reserveTableUrl)) &&
+        (!('url' in data) || isValidWebUrl(data.url)) &&
+        (!('menuUrl' in data) || isValidWebUrl(data.menuUrl)) &&
+        (!('imageUrl' in data) || isValidImageSource(data.imageUrl, 350000)) &&
+        (!('totalScore' in data) || data.totalScore == null || (data.totalScore is number && data.totalScore >= 0 && data.totalScore <= 5)) &&
+        (!('reviewsCount' in data) || data.reviewsCount == null || (data.reviewsCount is number && data.reviewsCount >= 0 && data.reviewsCount <= 10000000)) &&
+        (!('reviewsDistribution' in data) || data.reviewsDistribution == null || (
+          data.reviewsDistribution is map &&
+          data.reviewsDistribution.keys().hasOnly(['oneStar', 'twoStar', 'threeStar', 'fourStar', 'fiveStar'])
+        )) &&
+        (!('categories' in data) || data.categories == null || (data.categories is list && data.categories.size() <= 20)) &&
+        (!('openingHours' in data) || data.openingHours == null || (data.openingHours is list && data.openingHours.size() <= 14)) &&
+        (!('additionalOpeningHours' in data) || data.additionalOpeningHours == null || (data.additionalOpeningHours is map && data.additionalOpeningHours.size() <= 15)) &&
+        (!('additionalInfo' in data) || data.additionalInfo == null || (data.additionalInfo is map && data.additionalInfo.size() <= 30)) &&
+        (!('customTags' in data) || data.customTags == null || (data.customTags is list && data.customTags.size() <= 30)) &&
+        (!('galleryUrls' in data) || data.galleryUrls == null || (data.galleryUrls is list && data.galleryUrls.size() <= 20)) &&
+        (!('menuImages' in data) || data.menuImages == null || (data.menuImages is list && data.menuImages.size() <= 10)) &&
+        (!('menuHighlights' in data) || data.menuHighlights == null || (data.menuHighlights is list && data.menuHighlights.size() <= 30)) &&
+        (!('menuSections' in data) || data.menuSections == null || (data.menuSections is list && data.menuSections.size() <= 25)) &&
+        (!('reviews' in data) || data.reviews == null || (data.reviews is list && data.reviews.size() <= 20)) &&
+        (!('reviewsTags' in data) || data.reviewsTags == null || (data.reviewsTags is list && data.reviewsTags.size() <= 20)) &&
+        (!('isUserAdded' in data) || data.isUserAdded == null || data.isUserAdded is bool) &&
+        (!('createdAt' in data) || data.createdAt == null || isValidTimestampOrIso(data.createdAt));
+    }
+
+    function createdAtNotModified(data, prevData) {
+      return !('createdAt' in prevData) ||
+        prevData.createdAt == null ||
+        ('createdAt' in data && data.createdAt == prevData.createdAt);
+    }
+
+    // ===============================================================
+    // Domain Validators: Group Vote Rooms (voteRooms/{roomId})
+    // ===============================================================
+
+    function isValidVoteRoomId(roomId) {
+      return roomId is string && roomId.matches('^[A-Za-z0-9_-]{4,32}$');
+    }
+
+    function isValidVoteRestaurantIdAt(ids, idx) {
+      return ids.size() <= idx ||
+        (ids[idx] is string && ids[idx].size() >= 1 && ids[idx].size() <= 128);
+    }
+
+    function isValidVoteRestaurantIds(ids) {
+      return ids is list &&
+        ids.size() >= 1 &&
+        ids.size() <= 40 &&
+        isValidVoteRestaurantIdAt(ids, 0) &&
+        isValidVoteRestaurantIdAt(ids, 1) &&
+        isValidVoteRestaurantIdAt(ids, 2) &&
+        isValidVoteRestaurantIdAt(ids, 3) &&
+        isValidVoteRestaurantIdAt(ids, 4) &&
+        isValidVoteRestaurantIdAt(ids, 5) &&
+        isValidVoteRestaurantIdAt(ids, 6) &&
+        isValidVoteRestaurantIdAt(ids, 7) &&
+        isValidVoteRestaurantIdAt(ids, 8) &&
+        isValidVoteRestaurantIdAt(ids, 9) &&
+        isValidVoteRestaurantIdAt(ids, 10) &&
+        isValidVoteRestaurantIdAt(ids, 11) &&
+        isValidVoteRestaurantIdAt(ids, 12) &&
+        isValidVoteRestaurantIdAt(ids, 13) &&
+        isValidVoteRestaurantIdAt(ids, 14) &&
+        isValidVoteRestaurantIdAt(ids, 15) &&
+        isValidVoteRestaurantIdAt(ids, 16) &&
+        isValidVoteRestaurantIdAt(ids, 17) &&
+        isValidVoteRestaurantIdAt(ids, 18) &&
+        isValidVoteRestaurantIdAt(ids, 19) &&
+        isValidVoteRestaurantIdAt(ids, 20) &&
+        isValidVoteRestaurantIdAt(ids, 21) &&
+        isValidVoteRestaurantIdAt(ids, 22) &&
+        isValidVoteRestaurantIdAt(ids, 23) &&
+        isValidVoteRestaurantIdAt(ids, 24) &&
+        isValidVoteRestaurantIdAt(ids, 25) &&
+        isValidVoteRestaurantIdAt(ids, 26) &&
+        isValidVoteRestaurantIdAt(ids, 27) &&
+        isValidVoteRestaurantIdAt(ids, 28) &&
+        isValidVoteRestaurantIdAt(ids, 29) &&
+        isValidVoteRestaurantIdAt(ids, 30) &&
+        isValidVoteRestaurantIdAt(ids, 31) &&
+        isValidVoteRestaurantIdAt(ids, 32) &&
+        isValidVoteRestaurantIdAt(ids, 33) &&
+        isValidVoteRestaurantIdAt(ids, 34) &&
+        isValidVoteRestaurantIdAt(ids, 35) &&
+        isValidVoteRestaurantIdAt(ids, 36) &&
+        isValidVoteRestaurantIdAt(ids, 37) &&
+        isValidVoteRestaurantIdAt(ids, 38) &&
+        isValidVoteRestaurantIdAt(ids, 39);
+    }
+
+    function isValidMemberVotes(votesMap, restaurantIds) {
+      return votesMap is map &&
+        votesMap.size() <= 40 &&
+        votesMap.keys().hasOnly(restaurantIds) &&
+        votesMap.values().hasOnly(['like', 'pass']);
+    }
+
+    function isValidVoteRoom(data, roomId) {
+      return data.keys().hasAll([
+          'roomCode', 'hostUid', 'hostName', 'title', 'status',
+          'restaurantIds', 'members', 'votesByMember', 'createdAt', 'updatedAt'
+        ]) &&
+        data.keys().hasOnly([
+          'roomCode', 'hostUid', 'hostName', 'title', 'status',
+          'restaurantIds', 'members', 'votesByMember', 'winnerId',
+          'createdAt', 'updatedAt'
+        ]) &&
+        isValidVoteRoomId(roomId) &&
+        data.roomCode is string &&
+        data.roomCode == roomId &&
+        data.roomCode.size() >= 4 &&
+        data.roomCode.size() <= 16 &&
+        data.hostUid is string &&
+        data.hostUid.size() >= 1 &&
+        data.hostUid.size() <= 128 &&
+        data.hostName is string &&
+        data.hostName.trim().size() >= 1 &&
+        data.hostName.size() <= 60 &&
+        data.title is string &&
+        data.title.trim().size() >= 1 &&
+        data.title.size() <= 80 &&
+        data.status in ['voting', 'closed'] &&
+        isValidVoteRestaurantIds(data.restaurantIds) &&
+        data.members is map &&
+        data.members.size() >= 1 &&
+        data.members.size() <= 10 &&
+        data.hostUid in data.members &&
+        data.members[data.hostUid] is string &&
+        data.members[data.hostUid].trim().size() >= 1 &&
+        data.members[data.hostUid].size() <= 60 &&
+        data.votesByMember is map &&
+        data.votesByMember.size() <= 10 &&
+        (!('winnerId' in data) || data.winnerId == null || (
+          data.winnerId is string &&
+          data.winnerId.size() >= 1 &&
+          data.winnerId.size() <= 120 &&
+          data.winnerId in data.restaurantIds
+        )) &&
+        isValidTimestampOrIso(data.createdAt) &&
+        isValidTimestampOrIso(data.updatedAt);
+    }
+
+    function isValidVoteRoomCreate(data, roomId) {
+      return isValidVoteRoom(data, roomId) &&
+        data.hostUid == request.auth.uid &&
+        data.status == 'voting' &&
+        (!('winnerId' in data) || data.winnerId == null) &&
+        data.members.keys().hasOnly([request.auth.uid]) &&
+        data.votesByMember.keys().hasOnly([request.auth.uid]) &&
+        (!(request.auth.uid in data.votesByMember) ||
+          isValidMemberVotes(data.votesByMember[request.auth.uid], data.restaurantIds));
+    }
+
+    function isValidVoteRoomUpdateDetails(data, prevData) {
+      let topDiff = data.diff(prevData).affectedKeys();
+      let membersDiff = data.members.diff(prevData.members).affectedKeys();
+      let votesDiff = data.votesByMember.diff(prevData.votesByMember).affectedKeys();
+      let isHost = request.auth.uid == prevData.hostUid;
+      let callerMemberValid = !(request.auth.uid in data.members) || (
+        data.members[request.auth.uid] is string &&
+        data.members[request.auth.uid].trim().size() >= 1 &&
+        data.members[request.auth.uid].size() <= 60
+      );
+      let callerVotesValid = !(request.auth.uid in data.votesByMember) || (
+        request.auth.uid in data.members &&
+        isValidMemberVotes(data.votesByMember[request.auth.uid], data.restaurantIds)
+      );
+
+      return data.roomCode == prevData.roomCode &&
+        data.hostUid == prevData.hostUid &&
+        data.hostName == prevData.hostName &&
+        data.title == prevData.title &&
+        data.restaurantIds == prevData.restaurantIds &&
+        data.createdAt == prevData.createdAt &&
+        topDiff.hasOnly(['updatedAt', 'status', 'winnerId', 'members', 'votesByMember']) &&
+        membersDiff.hasOnly([request.auth.uid]) &&
+        votesDiff.hasOnly([request.auth.uid]) &&
+        callerMemberValid &&
+        callerVotesValid &&
+        (
+          (prevData.status == 'voting' && (
+            isHost || !topDiff.hasAny(['status', 'winnerId'])
+          )) ||
+          (prevData.status == 'closed' && isHost && (
+            data.status == 'voting' || !topDiff.hasAny(['members', 'votesByMember'])
+          ))
+        );
+    }
+
+    function isValidVoteRoomUpdate(data, prevData, roomId) {
+      return isValidVoteRoom(data, roomId) &&
+        prevData.members is map &&
+        prevData.votesByMember is map &&
+        isValidVoteRoomUpdateDetails(data, prevData);
+    }
+
+    // ===============================================================
+    // Collection Rules
+    // ===============================================================
+
+    // User profile & preferences document: strictly isolated per authenticated user
+    match /users/{userId} {
+      allow read: if isOwner(userId);
+      allow create: if isOwner(userId) && uidUnchanged(userId) && isValidUserDoc(request.resource.data);
+      allow update: if isOwner(userId) && uidNotModified(userId) && isValidUserDoc(request.resource.data);
+      allow delete: if isOwner(userId);
+
+      // User-added / customized restaurants subcollection: strictly isolated per owner
+      match /restaurants/{restaurantId} {
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId) && isValidRestaurant(request.resource.data, restaurantId);
+        allow update: if isOwner(userId) &&
+          isValidRestaurant(request.resource.data, restaurantId) &&
+          request.resource.data.id == resource.data.id &&
+          createdAtNotModified(request.resource.data, resource.data);
+        allow delete: if isOwner(userId);
+      }
+    }
+
+    // Real-time Group Food Voting rooms (2-5 friends, max 10 members per room)
+    match /voteRooms/{roomId} {
+      allow get: if isAuthenticated() && isValidVoteRoomId(roomId);
+      allow list: if isAuthenticated() && resource.data.hostUid == request.auth.uid;
+      allow create: if isAuthenticated() && isValidVoteRoomCreate(request.resource.data, roomId);
+      allow update: if isAuthenticated() && isValidVoteRoomUpdate(request.resource.data, resource.data, roomId);
+      allow delete: if isAuthenticated() && resource.data.hostUid == request.auth.uid;
+    }
+
+    // ===============================================================
+    // Default Deny
+    // ===============================================================
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

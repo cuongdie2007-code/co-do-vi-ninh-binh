@@ -1,0 +1,43 @@
+{
+  "locationQuery": "Trường Đại học Hoa Lư, Ninh Nhất, Ninh Bình, Vietnam",
+  "customGeolocation": {
+    "type": "Point",
+    "coordinates": [105.9525, 20.2535],
+    "radiusKm": 4
+  },
+  "maxCrawledPlacesPerSearch": 120,
+  "searchStringsArray": [
+    "quán ăn gần Đại học Hoa Lư Ninh Bình",
+    "quán cơm bình dân Ninh Nhất Ninh Bình",
+    "cơm tấm cơm văn phòng Ninh Bình",
+    "bún đậu mắm tôm Ninh Bình",
+    "bún chả bún riêu bún bò Ninh Bình",
+    "phở bò phở gà Ninh Nhất Ninh Bình",
+    "bánh mì xôi ăn sáng Ninh Bình",
+    "quán ăn vặt sinh viên Ninh Bình",
+    "trà sữa trà chanh Ninh Bình",
+    "mì cay gà rán tokbokki Ninh Bình",
+    "lẩu nướng bình dân Ninh Bình",
+    "quán ốc hải sản bình dân Ninh Bình",
+    "chè tào phớ kem Ninh Bình",
+    "miến lươn bánh cuốn cháo Ninh Bình",
+    "quán nhậu sinh viên Ninh Bình",
+    "quán ăn đường Kỳ Vĩ Ninh Nhất Ninh Bình",
+    "quán ăn đường Xuân Thành Ninh Bình",
+    "quán ăn đường Tràng An Ninh Bình",
+    "quán ăn phường Phúc Thành Ninh Bình",
+    "quán ăn phường Nam Thành Ninh Bình",
+    "quán ăn phường Đông Thành Ninh Bình",
+    "quán ăn phường Tân Thành Ninh Bình",
+    "quán ăn phường Vân Giang Ninh Bình",
+    "cà phê học bài Ninh Bình"
+  ],
+  "language": "vi",
+  "maxImages": 10,
+  "maxReviews": 10,
+  "reviewsSort": "newest",
+  "scrapePlaceDetailPage": true,
+  "scrapeReviewsPersonalData": true,
+  "includeWebResults": false,
+  "skipClosedPlaces": true
+}

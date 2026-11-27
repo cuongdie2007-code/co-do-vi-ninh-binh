@@ -1,0 +1,70 @@
+{
+  "firestore": {
+    "database": "codovi-db",
+    "location": "asia-southeast1",
+    "edition": "enterprise",
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "auth": {
+    "providers": {
+      "anonymous": true,
+      "emailPassword": true,
+      "googleSignIn": {
+        "oAuthBrandDisplayName": "Co Do Vi Ninh Binh",
+        "supportEmail": "cuongdie2007@gmail.com",
+        "authorizedRedirectUris": [
+          "https://co-do-vi-ninh-binh.firebaseapp.com/__/auth/handler",
+          "https://co-do-vi-ninh-binh.web.app/__/auth/handler",
+          "http://localhost:4173",
+          "http://localhost:5173"
+        ]
+      }
+    }
+  },
+  "hosting": {
+    "public": "dist",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "headers": [
+      {
+        "source": "/",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache, no-store, must-revalidate"
+          }
+        ]
+      },
+      {
+        "source": "**/*.html",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache, no-store, must-revalidate"
+          }
+        ]
+      },
+      {
+        "source": "/assets/**",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=31536000, immutable"
+          }
+        ]
+      }
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ],
+    "cleanUrls": true,
+    "trailingSlash": false
+  }
+}

@@ -1,0 +1,564 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Video Hướng Dẫn Chi Tiết — Cố Đô Vị (Chuẩn Vibe Coder 101)</title>
+  <style>
+    :root {
+      --bg: #070b14;
+      --panel: #0f172a;
+      --border: rgba(255,255,255,0.12);
+      --accent: #f59e0b;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(circle at top, #13203b 0%, var(--bg) 65%);
+      color: var(--text);
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 18px 14px 36px;
+      gap: 14px;
+    }
+    .header {
+      width: 100%;
+      max-width: 1040px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .header h1 { margin: 0; font-size: 18px; font-weight: 800; }
+    .header p { margin: 2px 0 0; font-size: 12.5px; color: var(--muted); }
+    .player-shell {
+      width: 100%;
+      max-width: 1040px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.55);
+    }
+    .stage-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #050811;
+    }
+    canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .subtitle-bar {
+      position: absolute;
+      left: 5%;
+      right: 5%;
+      bottom: 4.5%;
+      background: rgba(5, 8, 17, 0.84);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 12px;
+      padding: 10px 16px;
+      text-align: center;
+      font-size: clamp(12px, 1.5vw, 17px);
+      line-height: 1.45;
+      color: #f8fafc;
+      pointer-events: none;
+    }
+    .controls {
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      border-top: 1px solid var(--border);
+      background: rgba(15, 23, 42, 0.96);
+    }
+    .timeline-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+    input[type="range"] {
+      flex: 1;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+    .btn-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .btn-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    button, a.btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.07);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 7px 13px;
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.15s ease, transform 0.1s ease;
+    }
+    button:hover, a.btn:hover { background: rgba(255,255,255,0.14); }
+    button:active { transform: scale(0.97); }
+    button.primary {
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+      color: #1f1300;
+      border-color: transparent;
+    }
+    button.active {
+      background: rgba(245, 158, 11, 0.22);
+      border-color: rgba(245, 158, 11, 0.55);
+      color: #fde68a;
+    }
+    .chapters {
+      width: 100%;
+      max-width: 1040px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 8px;
+    }
+    .chap-btn {
+      text-align: left;
+      padding: 10px 12px;
+      border-radius: 12px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 3px;
+    }
+    .chap-btn .t { font-size: 11px; color: var(--accent); font-weight: 800; }
+    .chap-btn .n { font-size: 12.5px; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div>
+      <h1>🎬 Video Hướng Dẫn Chi Tiết — Cố Đô Vị (Chuẩn Vibe Coder 101)</h1>
+      <p>Tóm tắt trực quan những gì đã nâng cấp trong app & từng bước bạn cần làm tiếp</p>
+    </div>
+    <div class="btn-group">
+      <a class="btn" href="/">← Mở lại App Cố Đô Vị</a>
+    </div>
+  </div>
+
+  <div class="player-shell">
+    <div class="stage-wrap">
+      <canvas id="stage" width="1280" height="720"></canvas>
+      <div id="subtitle" class="subtitle-bar">Bấm ▶ Phát Video để xem hướng dẫn chi tiết...</div>
+    </div>
+
+    <div class="controls">
+      <div class="timeline-row">
+        <span id="curTime">00:00</span>
+        <input id="scrubber" type="range" min="0" max="88" step="0.1" value="0" />
+        <span id="totTime">01:28</span>
+      </div>
+
+      <div class="btn-row">
+        <div class="btn-group">
+          <button id="playBtn" class="primary">▶ Phát Video</button>
+          <button id="restartBtn">↺ Xem lại từ đầu</button>
+          <button id="voiceBtn" class="active">🔊 Đọc thuyết minh: BẬT</button>
+          <button id="speedBtn">Tốc độ: 1x</button>
+        </div>
+        <div class="btn-group">
+          <button id="exportBtn">⬇ Xuất & Tải Video (.webm)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="chapters" class="chapters"></div>
+
+  <script>
+    const SCENES = [
+      {
+        start: 0, end: 10,
+        badge: 'TỔNG QUAN',
+        color: '#f59e0b',
+        title: 'Nâng cấp Cố Đô Vị theo chuẩn Vibe Coder 101',
+        bullets: [
+          '✓ Đối chiếu 9 nguyên tắc từ video Duy Luân (vibecoder.fyi)',
+          '✓ Phần 1: Các nâng cấp đã tự động code xong trong App',
+          '✓ Phần 2: 3 việc quan trọng BẠN cần tự thực hiện'
+        ],
+        code: 'React 19 + Vite + Firebase Cloud Firestore + PWA',
+        narration: 'Chào bạn! Đây là video tóm tắt những gì mình đã nâng cấp cho app Cố Đô Vị theo chuẩn 9 bước của video Vibe Coder 101, kèm hướng dẫn chi tiết phần việc bạn cần làm tiếp.'
+      },
+      {
+        start: 10, end: 21,
+        badge: 'ĐÃ LÀM · MỤC 06',
+        color: '#10b981',
+        title: '1. Bảo mật cấu hình với .env & .gitignore',
+        bullets: [
+          '✓ Tạo .env chứa VITE_FIREBASE_* và .env.example làm mẫu',
+          '✓ Cập nhật src/firebase/firebaseApp.ts đọc biến từ import.meta.env',
+          '✓ Tạo .gitignore để chặn lộ .env và file dữ liệu nặng lên GitHub'
+        ],
+        code: '.env  |  .env.example  |  .gitignore  |  firebaseApp.ts',
+        narration: 'Đầu tiên là mục bảo mật: mình đã tách cấu hình Firebase ra file chấm env, tạo file mẫu env example, và thêm gitignore để không bao giờ đẩy nhầm key lên GitHub.'
+      },
+      {
+        start: 21, end: 32,
+        badge: 'ĐÃ LÀM · MỤC 02 & 05',
+        color: '#38bdf8',
+        title: '2. Service Worker (PWA) & Skeleton Loading',
+        bullets: [
+          '✓ Thêm public/sw.js + đăng ký trong src/main.tsx (chạy offline tốt hơn)',
+          '✓ Cache sẵn app shell và /data/restaurants.json khi mạng yếu',
+          '✓ Thay vòng xoay chờ bằng 6 thẻ Skeleton Shimmer khi tải quán'
+        ],
+        code: 'public/sw.js  +  src/main.tsx  +  codovi-skeleton-card',
+        narration: 'Thứ hai về trải nghiệm web app: mình đã thêm Service Worker để app lưu cache khi mất mạng, và nâng cấp màn hình tải danh sách quán sang hiệu ứng khung xương Skeleton mượt hơn.'
+      },
+      {
+        start: 32, end: 44,
+        badge: 'ĐÃ LÀM · MỤC 08',
+        color: '#ec4899',
+        title: '3. Quyền riêng tư & Xoá dữ liệu thật (Luật VN)',
+        bullets: [
+          '✓ Thêm mục Chính sách bảo mật & giải thích rõ quyền GPS ngay trong app',
+          '✓ Thêm nút "Xoá dữ liệu & tài khoản" có xác nhận 2 bước',
+          '✓ Hàm deleteAccountAndCloudData() xoá sạch trên Firestore + Firebase Auth'
+        ],
+        code: 'PersonalizationView.tsx  ->  deleteAccountAndCloudData()',
+        narration: 'Thứ ba theo quy định dữ liệu cá nhân: trong tab Cá nhân đã có Chính sách bảo mật giải thích rõ việc dùng GPS, cùng nút Xoá tài khoản giúp xoá sạch dữ liệu thật trên Firestore.'
+      },
+      {
+        start: 44, end: 55,
+        badge: 'ĐÃ LÀM · MỤC 04 & 09',
+        color: '#a855f7',
+        title: '4. Dọn code thừa & Tạo PROJECT_GUIDE.md cho AI',
+        bullets: [
+          '✓ Xoá file không dùng: SpinWheelSVG.tsx & useLocalStorageState.ts',
+          '✓ Chuyển @types/leaflet về devDependencies trong package.json',
+          '✓ Tạo PROJECT_GUIDE.md ghi rõ quy ước & vùng cấm sửa bừa cho AI'
+        ],
+        code: 'PROJECT_GUIDE.md  |  tsc --noEmit (0 lỗi)  |  vite build ✓',
+        narration: 'Thứ tư về quản lý code: mình đã xoá các file thừa không còn dùng và viết file PROJECT_GUIDE chấm md để sau này mỗi lần nhờ AI sửa code, AI hiểu đúng cấu trúc và không sửa hỏng.'
+      },
+      {
+        start: 55, end: 66,
+        badge: 'BẠN LÀM · BƯỚC 1',
+        color: '#f97316',
+        title: '5. Cài Git & Lưu code lên GitHub trước khi sửa tiếp',
+        bullets: [
+          '1. Tải và cài Git for Windows (git-scm.com)',
+          '2. Mở Terminal tại thư mục app, chạy: git init  ->  git add .',
+          '3. Chạy: git commit -m "ban on dinh"  (commit trước mỗi prompt AI!)'
+        ],
+        code: 'git init && git add . && git commit -m "ban on dinh dau tien"',
+        narration: 'Bây giờ là 3 việc bạn cần tự làm. Việc 1: máy bạn hiện chưa có Git, hãy cài Git for Windows và chạy git init, git commit để lưu bản an toàn trước mỗi lần nhờ AI sửa code.'
+      },
+      {
+        start: 66, end: 77,
+        badge: 'BẠN LÀM · BƯỚC 2',
+        color: '#eab308',
+        title: '6. Lấy thêm hàng trăm quán quanh ĐH Hoa Lư qua Apify',
+        bullets: [
+          '1. Mở file data-tools/apify-dhhoadu-student.json (đã cấu hình sẵn 4km)',
+          '2. Dán vào Apify Google Maps Scraper, chạy & lưu về data-tools/apify-full.json',
+          '3. Chạy lệnh: npm run apify:merge để gộp tự động + lọc trùng'
+        ],
+        code: 'npm run apify:merge   (input: data-tools/apify-dhhoadu-student.json)',
+        narration: 'Việc 2 để có nhiều quán sinh viên quanh Đại học Hoa Lư nhất: bạn dán file apify dhhoadu student chấm json vào Apify Google Maps Scraper, tải về rồi chạy npm run apify merge.'
+      },
+      {
+        start: 77, end: 88,
+        badge: 'BẠN LÀM · BƯỚC 3',
+        color: '#22c55e',
+        title: '7. Đưa bản mới lên Web thật (Firebase Deploy)',
+        bullets: [
+          '1. Kiểm tra lại giao diện local tại http://localhost:5173',
+          '2. Khi chốt đẩy lên web thật, chạy: firebase deploy --only firestore:rules,hosting',
+          '3. Mở link https://co-do-vi-ninh-binh.web.app trên điện thoại để test!'
+        ],
+        code: 'firebase deploy --only firestore:rules,hosting',
+        narration: 'Việc 3 khi bạn muốn đẩy lên mạng cho bạn bè cùng dùng: chạy lệnh firebase deploy kèm firestore rules và hosting để cập nhật cả bảo mật lẫn giao diện mới. Chúc bạn ship app thành công!'
+      }
+    ];
+
+    const TOTAL = 88;
+    const canvas = document.getElementById('stage');
+    const ctx = canvas.getContext('2d');
+    const scrubber = document.getElementById('scrubber');
+    const curTimeEl = document.getElementById('curTime');
+    const playBtn = document.getElementById('playBtn');
+    const restartBtn = document.getElementById('restartBtn');
+    const voiceBtn = document.getElementById('voiceBtn');
+    const speedBtn = document.getElementById('speedBtn');
+    const exportBtn = document.getElementById('exportBtn');
+    const subEl = document.getElementById('subtitle');
+    const chapWrap = document.getElementById('chapters');
+
+    let currentTime = 0;
+    let playing = false;
+    let voiceOn = true;
+    let speed = 1;
+    let lastRaf = 0;
+    let spokenIdx = -1;
+
+    function fmt(sec) {
+      const s = Math.max(0, Math.floor(sec));
+      return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
+    }
+
+    function speakScene(idx) {
+      if (!voiceOn || !('speechSynthesis' in window)) return;
+      try {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(SCENES[idx].narration);
+        u.lang = 'vi-VN';
+        u.rate = Math.min(1.5, speed * 1.05);
+        window.speechSynthesis.speak(u);
+      } catch {}
+    }
+
+    function renderChapters() {
+      chapWrap.innerHTML = '';
+      SCENES.forEach((sc, i) => {
+        const b = document.createElement('button');
+        b.className = 'chap-btn';
+        b.dataset.idx = i;
+        b.innerHTML = `<span class="t">${fmt(sc.start)} · ${sc.badge}</span><span class="n">${sc.title}</span>`;
+        b.onclick = () => {
+          currentTime = sc.start + 0.05;
+          spokenIdx = -1;
+          if (playing) speakScene(i);
+          draw(currentTime);
+        };
+        chapWrap.appendChild(b);
+      });
+    }
+
+    function roundRect(x, y, w, h, r) {
+      ctx.beginPath();
+      ctx.roundRect(x, y, w, h, r);
+    }
+
+    function draw(t) {
+      const idx = Math.max(0, SCENES.findIndex((s) => t >= s.start && t < s.end));
+      const sc = SCENES[idx] || SCENES[SCENES.length - 1];
+      const localT = Math.max(0, t - sc.start);
+      const dur = sc.end - sc.start;
+      const prog = Math.min(1, localT / dur);
+
+      // Background
+      const grad = ctx.createLinearGradient(0, 0, 1280, 720);
+      grad.addColorStop(0, '#091124');
+      grad.addColorStop(1, '#04070f');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 1280, 720);
+
+      // Ambient glow
+      const glow = ctx.createRadialGradient(1040, 140, 20, 1040, 140, 460);
+      glow.addColorStop(0, sc.color + '33');
+      glow.addColorStop(1, 'transparent');
+      ctx.fillStyle = glow;
+      ctx.fillRect(0, 0, 1280, 720);
+
+      // Top bar
+      ctx.fillStyle = 'rgba(255,255,255,0.06)';
+      roundRect(64, 44, 1152, 46, 14);
+      ctx.fill();
+      ctx.fillStyle = '#e2e8f0';
+      ctx.font = '700 18px system-ui, sans-serif';
+      ctx.fillText('🍜 CỐ ĐÔ VỊ — NINH BÌNH', 88, 73);
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '600 16px system-ui, sans-serif';
+      ctx.fillText(`Cảnh ${idx + 1}/${SCENES.length}  ·  ${fmt(t)} / ${fmt(TOTAL)}`, 980, 73);
+
+      // Badge
+      ctx.fillStyle = sc.color + '29';
+      roundRect(64, 124, 240, 38, 99);
+      ctx.fill();
+      ctx.strokeStyle = sc.color;
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+      ctx.fillStyle = sc.color;
+      ctx.font = '800 16px system-ui, sans-serif';
+      ctx.fillText(sc.badge, 84, 149);
+
+      // Title
+      const titleAlpha = Math.min(1, localT / 0.45);
+      ctx.globalAlpha = titleAlpha;
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '800 40px system-ui, sans-serif';
+      ctx.fillText(sc.title, 64, 214);
+      ctx.globalAlpha = 1;
+
+      // Bullet cards animated in
+      sc.bullets.forEach((b, bi) => {
+        const delay = 0.35 + bi * 0.65;
+        const a = Math.max(0, Math.min(1, (localT - delay) / 0.4));
+        const slideX = (1 - a) * 28;
+        ctx.globalAlpha = a;
+        ctx.fillStyle = 'rgba(255,255,255,0.06)';
+        roundRect(64 + slideX, 256 + bi * 86, 1152, 70, 16);
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        ctx.fillStyle = sc.color;
+        ctx.fillRect(64 + slideX, 256 + bi * 86 + 14, 5, 42);
+
+        ctx.fillStyle = '#f1f5f9';
+        ctx.font = '600 24px system-ui, sans-serif';
+        ctx.fillText(b, 92 + slideX, 299 + bi * 86);
+        ctx.globalAlpha = 1;
+      });
+
+      // Bottom command/file pill
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.9)';
+      roundRect(64, 532, 1152, 56, 14);
+      ctx.fill();
+      ctx.strokeStyle = sc.color + '66';
+      ctx.stroke();
+      ctx.fillStyle = '#fde68a';
+      ctx.font = '700 20px ui-monospace, Consolas, monospace';
+      ctx.fillText('> ' + sc.code, 88, 567);
+
+      // Scene progress line at very top
+      ctx.fillStyle = sc.color;
+      ctx.fillRect(0, 0, 1280 * (t / TOTAL), 5);
+
+      subEl.textContent = sc.narration;
+      scrubber.value = t;
+      curTimeEl.textContent = fmt(t);
+
+      [...chapWrap.children].forEach((btn, i) => {
+        btn.classList.toggle('active', i === idx);
+      });
+
+      if (playing && spokenIdx !== idx) {
+        spokenIdx = idx;
+        speakScene(idx);
+      }
+    }
+
+    function loop(ts) {
+      if (!playing) return;
+      if (!lastRaf) lastRaf = ts;
+      const dt = ((ts - lastRaf) / 1000) * speed;
+      lastRaf = ts;
+      currentTime += dt;
+      if (currentTime >= TOTAL) {
+        currentTime = TOTAL;
+        playing = false;
+        playBtn.textContent = '▶ Phát Video';
+      }
+      draw(currentTime);
+      if (playing) requestAnimationFrame(loop);
+    }
+
+    playBtn.onclick = () => {
+      if (currentTime >= TOTAL) currentTime = 0;
+      playing = !playing;
+      playBtn.textContent = playing ? '⏸ Tạm dừng' : '▶ Phát Video';
+      if (playing) {
+        lastRaf = 0;
+        spokenIdx = -1;
+        requestAnimationFrame(loop);
+      } else {
+        window.speechSynthesis?.cancel();
+      }
+    };
+
+    restartBtn.onclick = () => {
+      currentTime = 0;
+      spokenIdx = -1;
+      playing = true;
+      playBtn.textContent = '⏸ Tạm dừng';
+      lastRaf = 0;
+      requestAnimationFrame(loop);
+    };
+
+    voiceBtn.onclick = () => {
+      voiceOn = !voiceOn;
+      voiceBtn.classList.toggle('active', voiceOn);
+      voiceBtn.textContent = voiceOn ? '🔊 Đọc thuyết minh: BẬT' : '🔇 Đọc thuyết minh: TẮT';
+      if (!voiceOn) window.speechSynthesis?.cancel();
+    };
+
+    speedBtn.onclick = () => {
+      speed = speed === 1 ? 1.25 : speed === 1.25 ? 1.5 : 1;
+      speedBtn.textContent = `Tốc độ: ${speed}x`;
+    };
+
+    scrubber.oninput = (e) => {
+      currentTime = parseFloat(e.target.value);
+      spokenIdx = -1;
+      draw(currentTime);
+    };
+
+    exportBtn.onclick = async () => {
+      if (!canvas.captureStream || typeof MediaRecorder === 'undefined') {
+        alert('Trình duyệt hiện tại không hỗ trợ xuất file WebM trực tiếp.');
+        return;
+      }
+      exportBtn.disabled = true;
+      exportBtn.textContent = '⏳ Đang ghi video (tốc độ 2x)...';
+      const prevVoice = voiceOn;
+      voiceOn = false;
+      window.speechSynthesis?.cancel();
+
+      const stream = canvas.captureStream(30);
+      const chunks = [];
+      const rec = new MediaRecorder(stream, { mimeType: 'video/webm;codecs=vp9' });
+      rec.ondataavailable = (e) => { if (e.data.size > 0) chunks.push(e.data); };
+      rec.onstop = () => {
+        const blob = new Blob(chunks, { type: 'video/webm' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'huong-dan-co-do-vi-ninh-binh.webm';
+        a.click();
+        exportBtn.disabled = false;
+        exportBtn.textContent = '⬇ Xuất & Tải Video (.webm)';
+        voiceOn = prevVoice;
+      };
+
+      rec.start();
+      currentTime = 0;
+      speed = 2;
+      playing = true;
+      lastRaf = 0;
+      const checkDone = setInterval(() => {
+        if (!playing || currentTime >= TOTAL) {
+          clearInterval(checkDone);
+          speed = 1;
+          rec.stop();
+        }
+      }, 200);
+      requestAnimationFrame(loop);
+    };
+
+    renderChapters();
+    draw(0);
+  </script>
+</body>
+</html>

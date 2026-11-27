@@ -1,0 +1,18 @@
+{
+  "name": "Cố Đô Vị — Chọn Quán Ăn Ninh Bình",
+  "short_name": "Cố Đô Vị",
+  "description": "Ứng dụng khám phá & chọn đồ ăn tại Ninh Bình phong cách iOS Liquid Glass",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b1a17",
+  "theme_color": "#0b1a17",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/themes/trangan.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+# Dependencies & Build
+node_modules/
+dist/
+.vite/
+
+# Environment Secrets (NEVER commit .env)
+.env
+.env.local
+.env.*.local
+
+# Large raw scraping / backup data
+data-tools/apify-full.json
+data-tools/osm-ninhbinh-raw.json
+data-tools/restaurants.backup.json
+
+# OS & Editor
+.DS_Store
+Thumbs.db
+*.log

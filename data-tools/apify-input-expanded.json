@@ -1,0 +1,771 @@
+{
+  "locationQuery": "Ninh Bình, Vietnam",
+  "maxCrawledPlacesPerSearch": 150,
+  "searchStringsArray": [
+    "quán ăn Ninh Bình",
+    "quán ăn bình dân Ninh Bình",
+    "quán ăn nhỏ vỉa hè Ninh Bình",
+    "quán cơm bình dân Ninh Bình",
+    "cơm văn phòng cơm thố Ninh Bình",
+    "cơm niêu Ninh Bình",
+    "nhà hàng Ninh Bình",
+    "dê núi cơm cháy Ninh Bình",
+    "phở bò phở gà Ninh Bình",
+    "bún cá rô đồng bún mọc Ninh Bình",
+    "bún chả bún riêu bún bò Huế Ninh Bình",
+    "miến lươn bánh cuốn cháo Ninh Bình",
+    "quán ăn sáng Ninh Bình",
+    "lẩu nướng BBQ Ninh Bình",
+    "lẩu gà lẩu bò lẩu ếch Ninh Bình",
+    "hải sản quán ốc Ninh Bình",
+    "quán nhậu bình dân Ninh Bình",
+    "quán ăn đêm khuya Ninh Bình",
+    "quán ăn vặt xiên bẩn bánh tráng Ninh Bình",
+    "chè tào phớ bánh xèo nem lụi Ninh Bình",
+    "bánh mì xôi Ninh Bình",
+    "quán chay cơm chay Ninh Bình",
+    "đồ Hàn Nhật Thái gà rán pizza Ninh Bình",
+    "quán ăn Hoa Lư Ninh Bình",
+    "quán ăn Phố Cổ Hoa Lư Tràng An",
+    "quán ăn Tam Cốc Bích Động",
+    "quán ăn Ninh Khánh Đông Thành Phúc Thành",
+    "quán ăn Nam Thành Tân Thành Vân Giang",
+    "quán ăn TP Tam Điệp Ninh Bình",
+    "quán ăn Gia Viễn Bái Đính",
+    "quán ăn Yên Khánh Kim Sơn Phát Diệm",
+    "quán ăn Nho Quan Yên Mô"
+  ],
+  "startUrls": [
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ6fda14h3NjERRa8eu3mKBdY"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ8akMbAB5NjER7GdgDlOcc30"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJd9C0QAB5NjERNrkZjBVpFVc"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ2c7UOAB7NjERamD4LVUNwS8"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJkwTNIAB5NjER6LKv6XUm8kE"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJG3ZT9Bx5NjERu9SY_LwtJJs"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJIXV651VxNjERjk9IJJfdO6E"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJoSpn8UN5NjERKcXZJVvJm_8"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJlWJIAAB3NjERkyKA2QEiP3Q"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ7Uzn9A95NjERV3sWQyFwglA"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJOUaWvXNxNjERW6_ydo0le4g"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ2XWplzR5NjERwGDlPx23qEU"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJrS2bcQB5NjER5P_ipeoFLcI"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJC-gLQgB7NjERY2REtSkuwQU"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ4aCou7dxNjERbZEaCobFAxU"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJgfIk2w15NjER7ZsPnBBbne0"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ1eKku953NjER6cSvEMraoXw"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJTTmRGAB3NjERgOwRcrhFkGo"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJR1RBqSl7NjERo23sKaqdbWY"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJEeNXPoJxNjERaJbmmoHhHMA"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJa3awBnd5NjERd10CZzHkYnM"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJHUmJT9R5NjEREcD1mN2qNCk"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJqa1PPwB3NjERMTWMOI2Vg5c"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJP_vq-bJ5NjERw4IcizUtbBY"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJjdGXF3N3NjER0o9j9_qD7kE"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJUZ2-4v55NjER9Kb_jVW2B1I"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJm2pYLQB3NjERPVJz_72EefE"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJMfaA4qZ5NjERnFJtN7thiK8"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJj-xT8KxwNjERkb1rjn12loM"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJL1nWTQBxNjERb2UlBq7RxzI"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJF51I7_t5NjEREGiyqYT4k5k"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJL-zsjbJxNjER1ER2TBWqSNA"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ_ySZ8Dd5NjERqaKi5QY7ong"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJwXF8Obd5NjER0sDTXA3x3PE"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ95-9bqp5NjERL5YVUcwirac"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJi7_XYQBxNjERgT093UXr9V0"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJZT6igMJ3NjERdDLsweRXwT4"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJNba0Bh55NjER9FMRetd31ck"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ3xNhg3l5NjER7mCHCOZzvN0"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJW_HQEvx5NjERXo2ZrR9Y8Vo"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJE3MrcG55NjERz2OAFdZSB_M"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJLTYdL1d3NjERNeLEcOChvqc"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJn6X5ZU95NjERtbC90enEm3M"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ68XDqjV5NjER6WtifUJx5dQ"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJFQwOKrV5NjERRk_xRnvG5L0"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJn_CZDdRxNjER6wTVSLgAcZc"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJEWfWZ8Z3NjERrKMJEsotNdw"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJHawONiV7NjERVqLbTHuQgnM"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ2za2fd53NjERWAmLtY7dR-E"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ_53IH_t5NjERlPI8bzAr_3c"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJwWfec6xwNjERdjh6KZZeqBs"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJA5YYXnx5NjERTP3xz6sqyn8"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJzTGOUgBxNjER-JcbB3I_lJI"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ_Y08AgB5NjERKlkREFaGmM4"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJH1cRuI15NjER2In4Xj5DVCU"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJHYv-zyx5NjERM3PTfOMqfXs"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJHyoX4A97NjERhkL-k8SYmIU"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJaf47Vhx3NjERk7YSp8Pw0wM"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJmQ_BTQB5NjERRXWk2LC2RlU"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJlwJUeX95NjERyweH9vni598"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ1d9LPld3NjERM9rBkBzVTSw"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJPS4STQZ6NjERHGw_TX21XbI"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ-atqdlV3NjER3I97kg6hBmw"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ_ZeFkqh3NjERQgOpc665yDM"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJTda6_cZ3NjERf0Vco3Z2f8M"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJmet5p1BxNjERZR5jYKEuViQ"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ-7efXQB5NjEReo9-Q30YDY0"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ2wJ2tMZ3NjERiE-2Bm29CjY"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJuzw1eOFxNjER2OzVDUWSkR4"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJuyF6Xdt3NjERQQG4jkNdrJU"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJY2PFRFd3NjERQsmfFqvlOiU"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJcymZAQB6NjERSC9woJThIHw"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ31MXIuV3NjER31eMklVLn7M"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ9xelJatwNjER2ZXoZT3GfKE"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJVYdg4fp3NjERynMRWEy_KXw"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJuxSGWm95NjERrrrhsQLGLAw"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJi9tDsKtwNjERBe8wj944m8Y"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJPQUtVAB7NjERPgV2XXjIl_A"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJCVnUKvt3NjERWfssHTLfLwQ"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJvdbTzq1wNjERZzUkevUMBDc"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJR-qbqq1wNjERuxs-eRW37BQ"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJB62ilbZwNjERjr5OOcE0_EM"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJNQXPYwBxNjERKjSErKQhlUo"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJSWr9U1d3NjER0XSsc6xE0xI"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJJ5roHU95NjERW9GkuePvv2c"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJtZ1n64F5NjER1jOFhcX0qgU"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJKRmACVV3NjERgYtNXXKqOz8"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJXyEtYqp7NjERmE_hI0P7eTM"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJy_N4IfVxNjEROs_sW1iBNvI"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ5d_Pw415NjERG3hnKIKlYcQ"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ3-PPByt5NjER54W3AjczIiE"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJqzizAwB6NjERYhj9FEIvAXU"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJX3okqrB3NjERtOal6IeAzqk"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJr7vn70V3NjERqvYxHK8owcQ"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJd-NBKatwNjERAQ44T9ZiqTg"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ-Whk4lZ3NjERTFYUKT64mzQ"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJufxrZ1R3NjERc6n1GmZ_wAw"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJRafQbVV3NjERuILDnVrjF4k"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJxUGA-3d7NjERVNTN-I-T1tM"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ77-XQwBxNjER_cJ2SjUem0Q"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJWQ5VylB3NjERSUzbKgsaOFc"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJLe71KgR7NjER16oyWXe8wFs"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJS86ffQR6NjER0Od3AVqpBlo"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ7U6ghaxwNjERaKgiEIPQI5Q"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJXUqCPlZ3NjERXIjcWynlpH0"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ5eZktsx5NjERb83mN6hmQO4"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJyXnu8-55NjERcT6gOnkM-BM"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJGwOcoWh3NjERAgpFuyqhp-I"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ5bcLPVZ3NjERxzFAsf6tTyk"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ85vxRIJxNjERwSk7mqrsw0c"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJCz0ZlnJxNjER0wenRUbrfNU"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJrZF1MQB7NjERwWumoEOd_WM"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJqxebrkZ5NjER8Fg-wh1MWWQ"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJD9SPqB93NjERZz7G2zlz_Rk"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJz72UaFx3NjERwI157IBJorY"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ20jK8CF6NjERuffuZU_GFwk"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJPZXni_Z3NjERp1109RbYr6g"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJq6-ZpQVxNjERmTbECzSUapc"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJiVQkEnx3NjERbQg1eKVHeCs"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJPdEPilN3NjERPuKf_fqeQDI"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJjTP6BwB5NjERbFsu45A35_8"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJUct_8Q9xNjERod0qwOeW4Vw"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ9RGBwVZ3NjERPwlnLC95wZc"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJVXmnxPJ3NjERFLGkRDMUzXY"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ09QdOeJ3NjERkTgKhTFwaRM"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJDdSYHQB3NjER_Wwvf9FYbwE"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJnfwjYgB5NjERC0JXIRNpNj4"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ73EzIft5NjERO_RX2HCme5E"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ02yAkVV3NjERP4nBImEpibU"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJdW4IPgBxNjERwBZOYARU-5o"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJBTwJ5v15NjERdJKAtQ0bs3o"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJBb9IcwB5NjERezF-snxJqtA"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ6Y_MNQB5NjERvlr8JJJIN2k"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ6ZSQUgp6NjERCZ2-07m8Op8"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJqZDXRFJ3NjERY6p3LdstwD4"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJc52Z9Vl3NjERIB8jkIZyur8"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJWUgdwhx5NjERSRfsfCpo-RA"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJc2sV8zt3NjERhsv1RDdifgY"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJq6qqqgd6NjERmxbZi_garoA"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJN2bxvkV3NjERhlhS6XBJ1D4"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ4chIJ1N3NjERxaRxm_AzpXc"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJVQEWdlV3NjER8SZj-mvG0KQ"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJRWEzT61wNjERXVGxf_4xy2k"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJZ9BlTBp3NjERyrCkd5xfV3k"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJUWirA9p5NjERSqr-dN6V5Bk"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJGfNoBQB5NjERRsEhnxQQ6X8"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJeRkRv4F3NjERr4fWiXg8laI"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ82KdQ7FwNjERgyo-Ku5qtyU"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJbWSdKlV3NjERxlPZ17GaYGk"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJWTJ1l1d3NjER06iRMlTWeAg"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ801EayVxNjERptVe1WjfoHI"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJQeXmwEV3NjER4kxPTnN1VCw"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ15aTQAB5NjERnX9wqOOAsF0"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJC9EInFd3NjERJJWw_-1yqOw"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJMx0HQqlwNjER0B6EfBc2NU0"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ50CF9rFwNjERGZGAWg5cRGI"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ68AAnlV3NjERWdG6urHBhh8"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJr_eLIwB7NjERtbMsTJchjMs"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJH4xICQB5NjERy7V7Z415ZfY"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJU8a-i7RwNjERiyNfBTeWRis"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJsUZZqwJ3NjER0U6S2pIjizU"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJVyp3d1V3NjER3dbrgdyz9yo"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJmyVFQbh3NjERCroAJPgs0WE"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJa_rXFqV7NjER1qnux8EychU"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ4baEqHR5NjER9VHOz075uXg"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ0VCtZQJ6NjERn1ZMo55t5g4"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJo2bUBFp3NjERmzyWJOxNheo"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJDRyejJF5NjERQP3kE225As0"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ27ZnWQB5NjER3xsGtZMHipQ"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJXWOnFkh3NjERvp6Ib1XjnJQ"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJs2pVHPh5NjER273Ytm25tfg"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJs_4eWvR3NjERKVl-7M8UVGo"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ3Q-QIHR7NjER2UwNfEXlsWs"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJdbJ2esl3NjERM8oKm0Erds8"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ-XIiODd3NjERvvwNBhZiNsU"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJgRqZNCB3NjER8mHlehmyK8I"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJEbTOZsR5NjERlNXYvQrYCv0"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJYcM0QDt3NjERmnloX5_pPgM"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJNULFDgB5NjERkLvv89QTurk"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJrVrJhVl5NjERY7JTagwgMEM"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJCwMYTQB5NjERmk5jKH6EP6E"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJB7zoi-F5NjER-J3-Y6Gp0vw"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJs_w-nql5NjER9m1wR1M2Q4w"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJEw8pDgB5NjERFi2euK9jlzM"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ0Zbs7nh3NjER36-hnpdk8V4"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJH-W8Qd55NjER-tH7jzSh4aI"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJl17lNb93NjERF81tMCi_-6M"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ4_Z_bQB5NjERmeGcbgiXcI0"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ6Q5oQUF5NjERp4q8CKxwWSM"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJy5SZfrJ3NjERHIUDfMthnqo"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ1cle8WB3NjERsieFp_bfu3w"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ3YiD_l93NjER77MokQa48UU"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJtyFEYuR5NjERQMoGIM1y0dc"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJv0l4NQB5NjERW36037HrXGE"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJC17pgtZ5NjEROzCRzstpKBY"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJtehH9sB5NjERz8O9Y0Qn5nM"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJv5CSD6x5NjER8MFUoq3yEyI"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJITdiy4d5NjERNtx9fnheuUQ"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJQ8gBWZZ5NjER8choBJVuL6o"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJSUHROgB3NjERVjIkTvqmpTg"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJmZt-cgB5NjERo-6AEF4FBL0"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ2V0lFtR5NjERSixg-t8Hm_g"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ0bPnE_d3NjER9LRcofif8hU"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJVcEBEQB5NjERaPhTCTOO-2c"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJd3TTbAB3NjERvemAVPTvbHM"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJcbbqfwB5NjER4305pSHMEkI"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJKS0NSGV5NjERWMhcJyATXFA"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJb3zcXcp3NjER16oytWBpq-s"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJBej5wwJ5NjERCWmsDwRtgpk"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJM-86WAB3NjER1BQ6f4L9FiU"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ____P1d3NjERzI4je4fNJik"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJq3Unw795NjERYfI4-Y_D6qk"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJjemskOJ5NjERcRu1c2Ytq2E"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ23LwHVZ5NjER9Eg830y1wUA"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJK57cXgB3NjERbNfftQ6ZcbM"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJw8AqEtp3NjERi3YORmfTojU"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ____P1d3NjERKzsSBlGYjNI"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJHRLUGAB3NjER_5KMdt0lSvs"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJZaice_15NjERuKgg2RLpDsQ"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJHYxThq53NjERDOe6843TKgc"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ_SqGBAB3NjERDBTtWAkq3s4"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJe728p4B5NjERV91OzeoQtAM"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJmyS7w-Z5NjERgffE-NKkrm4"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJmRnbWAB5NjERg04R9sPoXJo"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJpWsuauB5NjERPFdtiW5FKYk"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJpyj1Gdx3NjERu8uC-p4JBxg"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJd5QtMl53NjER-eD_ONjmA_I"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ53vHiV93NjERqUYBm-KKIBU"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJM0StKwh5NjERm2B4zMtC1Gk"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJWWTAzeZ5NjERGqwggdzhQ5k"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJi0UbPKV3NjERbgM0zGSh-Io"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJz3ZwdgB3NjERf2QRTKQn8D0"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJXdASveZ5NjERUbi-GJgjAmg"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJB_NK2Et3NjERYbQFUuEN3W0"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJ____P1d3NjERCvRUoP52pLA"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJt2MYAQB5NjERDltW24eNWLU"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJj8GjUwB3NjER3aP857jeoxQ"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJk_uK-j55NjER1k-3S8yfn48"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJb_CtEVd3NjER1LV93UORd3U"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJJcGKzuZ5NjER7oIBWWeAi3Y"
+    },
+    {
+      "url": "https://www.google.com/maps/place/?q=place_id:ChIJYV4mEwB3NjER62Smj10znrA"
+    }
+  ],
+  "language": "vi",
+  "maxImages": 10,
+  "maxReviews": 10,
+  "reviewsSort": "newest",
+  "scrapePlaceDetailPage": true,
+  "scrapeReviewsPersonalData": true,
+  "includeWebResults": false,
+  "skipClosedPlaces": false
+}
