@@ -1,0 +1,60 @@
+name: Auto Refresh Ninh Binh Eateries & Verify Build
+
+on:
+  schedule:
+    # Chạy tự động mỗi ngày lúc 03:00 sáng giờ Việt Nam (20:00 UTC)
+    - cron: '0 20 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh_and_verify:
+    name: Refresh Open Data & Check Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Fetch latest OpenStreetMap & Esri Ninh Binh eateries
+        continue-on-error: true
+        run: |
+          node scripts/fetch-osm-ninhbinh.mjs || true
+          if [ -s data-tools/osm-ninhbinh-new.json ]; then
+            node scripts/merge-apify-restaurants.mjs --input data-tools/osm-ninhbinh-new.json
+          fi
+
+      - name: Verify TypeScript & Vite Build
+        run: npm run build
+        env:
+          VITE_FIREBASE_PROJECT_ID: ${{ vars.VITE_FIREBASE_PROJECT_ID }}
+          VITE_FIREBASE_APP_ID: ${{ vars.VITE_FIREBASE_APP_ID }}
+          VITE_FIREBASE_STORAGE_BUCKET: ${{ vars.VITE_FIREBASE_STORAGE_BUCKET }}
+          VITE_FIREBASE_API_KEY: ${{ vars.VITE_FIREBASE_API_KEY }}
+          VITE_FIREBASE_AUTH_DOMAIN: ${{ vars.VITE_FIREBASE_AUTH_DOMAIN }}
+          VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ vars.VITE_FIREBASE_MESSAGING_SENDER_ID }}
+          VITE_FIREBASE_MEASUREMENT_ID: ${{ vars.VITE_FIREBASE_MEASUREMENT_ID }}
+          VITE_FIRESTORE_DATABASE_ID: ${{ vars.VITE_FIRESTORE_DATABASE_ID }}
+
+      - name: Commit & push if new eateries were found
+        run: |
+          if [ -n "$(git status --porcelain public/data/restaurants.json)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add public/data/restaurants.json
+            git commit -m "chore(data): auto-refresh Ninh Binh eateries"
+            git push
+          else
+            echo "Không có quán mới từ nguồn mở hôm nay — bỏ qua commit."
+          fi
