@@ -2063,112 +2063,147 @@ export function App() {
                   gap: 6,
                 }}
               >
-                {searchScope !== 'places' && searchPanelResults.dishItems.length > 0 && (
-                  <>
-                    <div
-                      style={{
-                        fontSize: 11,
-                        fontWeight: 800,
-                        letterSpacing: '0.03em',
-                        color: 'var(--accent)',
-                        padding: '2px 4px',
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                      }}
-                    >
-                      <span>🍜 PHẦN MÓN ĂN ({searchPanelResults.totalDishes})</span>
-                    </div>
-                    {(searchScope === 'all'
-                      ? searchPanelResults.dishItems.slice(0, 6)
-                      : searchPanelResults.dishItems
-                    ).map((d, dIdx) => {
-                      const dThumb = getCrispPhotoUrl(d.imageUrl, 160);
-                      return (
-                        <button
-                          key={`dish-${d.r.id}-${dIdx}-${d.dishName}`}
-                          type="button"
-                          className="lg-pill"
-                          onClick={() => {
-                            setShowSearchPanel(false);
-                            openRestaurant(d.r);
-                          }}
-                          style={{
-                            width: '100%',
-                            justifyContent: 'flex-start',
-                            padding: '7px 9px',
-                            borderRadius: 14,
-                            gap: 10,
-                            minHeight: 52,
-                            textAlign: 'left',
-                          }}
-                        >
-                          <div
-                            style={{
-                              width: 38,
-                              height: 38,
-                              borderRadius: 10,
-                              overflow: 'hidden',
-                              flexShrink: 0,
-                              background: 'rgba(245,158,11,0.16)',
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              fontSize: 16,
+                {searchScope !== 'places' && searchPanelResults.dishItems.length > 0 && (() => {
+                  const groupedByRest = new Map<
+                    string,
+                    {
+                      r: Restaurant;
+                      distKm: number;
+                      openState: string;
+                      dishes: typeof searchPanelResults.dishItems;
+                    }
+                  >();
+                  for (const d of searchPanelResults.dishItems) {
+                    const existingGroup = groupedByRest.get(d.r.id);
+                    if (existingGroup) {
+                      existingGroup.dishes.push(d);
+                    } else {
+                      groupedByRest.set(d.r.id, {
+                        r: d.r,
+                        distKm: d.distKm,
+                        openState: d.openState,
+                        dishes: [d],
+                      });
+                    }
+                  }
+                  const groups = Array.from(groupedByRest.values()).slice(
+                    0,
+                    searchScope === 'all' ? 5 : 15
+                  );
+                  return (
+                    <>
+                      <div
+                        style={{
+                          fontSize: 11,
+                          fontWeight: 800,
+                          letterSpacing: '0.03em',
+                          color: '#34d399',
+                          padding: '2px 4px',
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                        }}
+                      >
+                        <span>🍜 MÓN ĂN KIỂU GRAB ({searchPanelResults.totalDishes} món · {groupedByRest.size} quán)</span>
+                      </div>
+                      {groups.map((grp) => {
+                        const rThumb = getCrispPhotoUrl(grp.r.imageUrl, 160);
+                        return (
+                          <button
+                            key={`grab-dish-grp-${grp.r.id}`}
+                            type="button"
+                            className="codovi-grab-dish-card"
+                            onClick={() => {
+                              setShowSearchPanel(false);
+                              openRestaurant(grp.r);
                             }}
                           >
-                            {dThumb ? (
-                              <img
-                                src={dThumb}
-                                alt={d.dishName}
-                                referrerPolicy="no-referrer"
-                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                              />
-                            ) : (
-                              '🍜'
-                            )}
-                          </div>
-                          <div style={{ flex: 1, minWidth: 0 }}>
-                            <div
-                              style={{
-                                fontSize: 13,
-                                fontWeight: 700,
-                                whiteSpace: 'nowrap',
-                                overflow: 'hidden',
-                                textOverflow: 'ellipsis',
-                              }}
-                            >
-                              {d.dishName}
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
+                              <div
+                                style={{
+                                  width: 34,
+                                  height: 34,
+                                  borderRadius: 9,
+                                  overflow: 'hidden',
+                                  flexShrink: 0,
+                                  background: 'rgba(15,23,42,0.45)',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                  fontSize: 15,
+                                }}
+                              >
+                                {rThumb ? (
+                                  <img
+                                    src={rThumb}
+                                    alt={grp.r.title}
+                                    referrerPolicy="no-referrer"
+                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                  />
+                                ) : (
+                                  '🏪'
+                                )}
+                              </div>
+                              <div style={{ flex: 1, minWidth: 0 }}>
+                                <div
+                                  style={{
+                                    fontSize: 12.5,
+                                    fontWeight: 700,
+                                    whiteSpace: 'nowrap',
+                                    overflow: 'hidden',
+                                    textOverflow: 'ellipsis',
+                                  }}
+                                >
+                                  {grp.r.title}
+                                </div>
+                                <div style={{ fontSize: 10.5, color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: 6 }}>
+                                  {grp.r.totalScore ? <span>★ {grp.r.totalScore.toFixed(1)}</span> : null}
+                                  <span>{formatDistance(grp.distKm)}</span>
+                                  <span>{grp.openState === 'open' ? '🟢 Đang mở' : grp.openState === 'closing-soon' ? '🟡 Sắp đóng' : ''}</span>
+                                </div>
+                              </div>
                             </div>
-                            <div
-                              style={{
-                                fontSize: 11,
-                                color: 'var(--text-secondary)',
-                                whiteSpace: 'nowrap',
-                                overflow: 'hidden',
-                                textOverflow: 'ellipsis',
-                              }}
-                            >
-                              {d.source === 'custom'
-                                ? '✨ Tự thêm'
-                                : d.source === 'menu'
-                                ? '📋 Thực đơn'
-                                : '🏷️ Món chính'}{' '}
-                              · {d.r.title} · {formatDistance(d.distKm)}
+                            <div className="codovi-grab-dish-row">
+                              {grp.dishes.slice(0, 6).map((d, dIdx) => {
+                                const dThumb = getCrispPhotoUrl(d.imageUrl, 120);
+                                return (
+                                  <div key={`${grp.r.id}-chip-${dIdx}`} className="codovi-grab-dish-chip">
+                                    {dThumb ? (
+                                      <img
+                                        src={dThumb}
+                                        alt={d.dishName}
+                                        referrerPolicy="no-referrer"
+                                        style={{ width: 32, height: 32, borderRadius: 7, objectFit: 'cover', flexShrink: 0 }}
+                                      />
+                                    ) : (
+                                      <span style={{ fontSize: 15, flexShrink: 0 }}>🍜</span>
+                                    )}
+                                    <div style={{ minWidth: 0 }}>
+                                      <div
+                                        style={{
+                                          fontSize: 11.5,
+                                          fontWeight: 700,
+                                          whiteSpace: 'nowrap',
+                                          overflow: 'hidden',
+                                          textOverflow: 'ellipsis',
+                                          maxWidth: 138,
+                                        }}
+                                      >
+                                        {d.dishName}
+                                      </div>
+                                      <div style={{ fontSize: 10.5, color: d.dishPrice ? '#fbbf24' : 'var(--text-muted)', fontWeight: 700 }}>
+                                        {d.dishPrice || (d.source === 'custom' ? '✨ Tự thêm' : '📋 Thực đơn')}
+                                      </div>
+                                    </div>
+                                  </div>
+                                );
+                              })}
                             </div>
-                          </div>
-                          {d.dishPrice && (
-                            <span
-                              className="price-pill-highlight"
-                              style={{ fontSize: 10.5, padding: '2px 7px', flexShrink: 0 }}
-                            >
-                              {d.dishPrice}
-                            </span>
-                          )}
-                        </button>
-                      );
-                    })}
-                  </>
-                )}
+                          </button>
+                        );
+                      })}
+                    </>
+                  );
+                })()}
 
                 {searchScope !== 'dishes' && searchPanelResults.items.length > 0 && (
                   <div
@@ -2745,7 +2780,7 @@ export function App() {
                 </div>
               </div>
 
-              {/* Clean Phương án 1 Category Strip */}
+              {/* Quick Venue & Price Filters */}
               <div className="h-scroll-row">
                 {(
                   [
@@ -2781,19 +2816,27 @@ export function App() {
                   <Banknote size={13} />{' '}
                   {hasPriceRangeFilter ? formatPriceRangeBadge(searchPriceMinK, searchPriceMaxK) : 'Mức giá'}
                 </button>
-                {TASTE_OPTIONS.map((t) => (
-                  <button
-                    key={t.key}
-                    type="button"
-                    className={`lg-pill ${catFilter === t.key ? 'active' : ''}`}
-                    onClick={() => {
-                      setCatFilter(t.key);
-                      setVisibleCount(pageBatchSize);
-                    }}
-                  >
-                    {t.emoji} {t.label}
-                  </button>
-                ))}
+              </div>
+
+              {/* GrabFood-style Icon Dish Category Strip */}
+              <div className="codovi-grab-cat-strip">
+                {TASTE_OPTIONS.map((t) => {
+                  const isAct = catFilter === t.key;
+                  return (
+                    <button
+                      key={t.key}
+                      type="button"
+                      className={`codovi-grab-cat-item ${isAct ? 'active' : ''}`}
+                      onClick={() => {
+                        setCatFilter(isAct ? 'all' : t.key);
+                        setVisibleCount(pageBatchSize);
+                      }}
+                    >
+                      <span className="codovi-grab-cat-icon">{t.emoji}</span>
+                      <span className="codovi-grab-cat-label">{t.label}</span>
+                    </button>
+                  );
+                })}
               </div>
 
               {/* Search Match Reasons Banner when searching menu/address/reviews */}

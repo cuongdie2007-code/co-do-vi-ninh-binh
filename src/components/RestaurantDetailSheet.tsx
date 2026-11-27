@@ -1812,8 +1812,13 @@ export const RestaurantDetailSheet: React.FC<RestaurantDetailSheetProps> = ({
                 TIỆN ÍCH & DỊCH VỤ QUÁN
               </div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-                {accessLabels
-                  .filter((item) => item.available)
+                {Array.from(
+                  new Map(
+                    accessLabels
+                      .filter((item) => item.available)
+                      .map((item) => [item.label, item])
+                  ).values()
+                )
                   .slice(0, 18)
                   .map((item) => (
                     <span

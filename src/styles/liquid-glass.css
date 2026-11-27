@@ -1774,6 +1774,113 @@ input[type='range'].dual-range-input::-webkit-slider-thumb:active {
   }
 }
 
+/* GrabFood-style Dish Category Icon Strip & Grouped Dish Search Cards */
+.codovi-grab-cat-strip {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 2px 2px 4px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.codovi-grab-cat-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.codovi-grab-cat-item {
+  flex: 0 0 68px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 4px;
+  border-radius: 16px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-family: inherit;
+  transition: transform 0.16s var(--hyper-spring), background 0.16s ease, border-color 0.16s ease;
+}
+
+.codovi-grab-cat-item:active {
+  transform: scale(0.94);
+}
+
+.codovi-grab-cat-item.active {
+  background: rgba(16, 185, 129, 0.14);
+  border-color: rgba(16, 185, 129, 0.45);
+  color: var(--text-primary);
+}
+
+.codovi-grab-cat-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04));
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
+}
+
+.codovi-grab-cat-item.active .codovi-grab-cat-icon {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.34), rgba(5, 150, 105, 0.2));
+  border-color: #34d399;
+}
+
+.codovi-grab-cat-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.codovi-grab-dish-card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 9px 10px;
+  border-radius: 16px;
+  background: var(--glass-surface-quiet);
+  border: 1px solid var(--glass-border);
+  text-align: left;
+  color: var(--text-primary);
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.codovi-grab-dish-row {
+  display: flex;
+  gap: 7px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.codovi-grab-dish-row::-webkit-scrollbar {
+  display: none;
+}
+
+.codovi-grab-dish-chip {
+  flex: 0 0 auto;
+  max-width: 205px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 8px;
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--glass-hairline);
+}
+
 /* GPS & Leaflet OpenStreetMap View */
 .codovi-gps-btn {
   display: inline-flex;
