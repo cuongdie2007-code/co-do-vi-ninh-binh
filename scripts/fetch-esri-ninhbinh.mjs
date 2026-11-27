@@ -89,7 +89,10 @@ function inferNeighborhood(addr, lat, lng) {
     return 'Ninh Nhất · ĐH Hoa Lư';
   }
   if (a.includes('ninh hai') || a.includes('tam coc') || a.includes('bich dong')) return 'Tam Cốc - Bích Động';
-  if (a.includes('ninh xuan') || a.includes('trang an')) return 'Tràng An';
+  if (a.includes('ninh xuan') || a.includes('trang an') || a.includes('truong yen')) return 'Tràng An · Trường Yên';
+  if (a.includes('gia vien') || a.includes('gia sinh') || a.includes('bai dinh')) return 'Gia Viễn · Bái Đính';
+  if (a.includes('yen khanh') || a.includes('khanh phu') || a.includes('khanh cu')) return 'Yên Khánh';
+  if (a.includes('tam diep')) return 'TP Tam Điệp';
   if (a.includes('dong thanh')) return 'Đông Thành, Hoa Lư';
   if (a.includes('phuc thanh')) return 'Phúc Thành, Hoa Lư';
   if (a.includes('tan thanh')) return 'Tân Thành, Hoa Lư';
@@ -102,7 +105,7 @@ async function queryEsri(singleLine, category) {
   const u =
     'https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=' +
     encodeURIComponent(singleLine) +
-    '&searchExtent=105.88,20.19,106.03,20.32&sourceCountry=VN&maxLocations=50&category=' +
+    '&searchExtent=105.85,20.16,106.06,20.35&sourceCountry=VN&maxLocations=50&category=' +
     encodeURIComponent(category) +
     '&f=json&outFields=PlaceName,Place_addr,Type,Phone,URL';
   const r = await fetch(u, { signal: AbortSignal.timeout(12000) });
@@ -128,6 +131,11 @@ async function main() {
     'quán Hải Thượng Lãn Ông', 'quán Nguyễn Công Trứ', 'quán Trần Hưng Đạo',
     'quán Cù Chính Lan', 'quán Hoàng Hoa Thám', 'quán Tây Thành',
     'quán Ninh Khánh', 'quán Ninh Mỹ', 'quán Bích Đào',
+    // 10km ring around Hoa Lu Uni
+    'quán Trường Yên', 'quán Gia Sinh', 'quán Bái Đính', 'quán Gia Viễn',
+    'quán Ninh An', 'quán Ninh Vân', 'quán Ninh Thắng', 'quán Ninh Tiến',
+    'quán Ninh Phúc', 'quán Khánh Phú', 'quán Khánh Cư', 'quán Yên Khánh',
+    'quán Ninh Giang', 'quán Ninh Khang', 'nhà hàng Bái Đính', 'nhà hàng Tràng An',
   ];
 
   const categories = ['Food', 'Coffee Shop'];
@@ -188,7 +196,7 @@ async function main() {
     const lat = c.location?.y;
     const lng = c.location?.x;
     if (typeof lat !== 'number' || typeof lng !== 'number') continue;
-    if (lat < 20.19 || lat > 20.32 || lng < 105.88 || lng > 106.03) continue;
+    if (calcKm({ lat: 20.2535, lng: 105.9525 }, { lat, lng }) > 10.5) continue;
 
     const addr = String(attr.Place_addr || 'Hoa Lư, Ninh Bình').replace(/,\s*\d{5}$/, '');
     const dup =
