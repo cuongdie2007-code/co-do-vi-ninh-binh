@@ -2034,3 +2034,208 @@ input[type='range'].dual-range-input::-webkit-slider-thumb:active {
   gap: 9px;
   animation: slideUpSpring 0.28s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
+
+/* HyperOS-Style Anchored Multi-Select Filter Popup (Tự chọn) */
+.apple-icon-btn:focus-visible,
+.codovi-hyperos-tile:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.codovi-hyperos-filter-popup {
+  position: absolute;
+  width: min(344px, calc(100% - 24px));
+  z-index: 45;
+  border-radius: 22px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform-origin: top right;
+  will-change: transform, opacity;
+  animation: popoverSpringIn 0.28s var(--hyper-spring) both;
+}
+
+.codovi-hyperos-filter-popup.is-closing {
+  animation: popoverSpringOut 0.2s var(--exit-ease) both;
+  pointer-events: none;
+}
+
+.codovi-hyperos-popup-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 11px 12px 9px;
+  border-bottom: 1px solid var(--glass-hairline);
+  flex-shrink: 0;
+}
+
+.codovi-hyperos-count-badge {
+  min-width: 19px;
+  height: 19px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--accent-fg, #09090b);
+  font-size: 10.5px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.codovi-hyperos-popup-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 9px 11px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overscroll-behavior-y: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.22) transparent;
+}
+
+.codovi-hyperos-popup-body::-webkit-scrollbar,
+.codovi-subtle-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.codovi-hyperos-popup-body::-webkit-scrollbar-track,
+.codovi-subtle-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.codovi-hyperos-popup-body::-webkit-scrollbar-thumb,
+.codovi-subtle-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+}
+
+.codovi-subtle-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+[data-glass-mode='light'] .codovi-hyperos-popup-body,
+[data-glass-mode='light'] .codovi-subtle-scroll {
+  scrollbar-color: rgba(15, 23, 42, 0.22) transparent;
+}
+
+[data-glass-mode='light'] .codovi-hyperos-popup-body::-webkit-scrollbar-thumb,
+[data-glass-mode='light'] .codovi-subtle-scroll::-webkit-scrollbar-thumb {
+  background: rgba(15, 23, 42, 0.22);
+}
+
+.codovi-hyperos-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.codovi-hyperos-section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  padding: 0 2px;
+}
+
+.codovi-hyperos-clear-link {
+  border: none;
+  background: transparent;
+  padding: 0 4px;
+  color: var(--accent);
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.codovi-hyperos-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.codovi-hyperos-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.codovi-hyperos-wrap-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.codovi-hyperos-tile {
+  min-height: 36px;
+  padding: 6px 9px;
+  border-radius: 13px;
+  border: 1px solid var(--glass-hairline);
+  background: var(--glass-pill-bg);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 11.5px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  text-align: left;
+  cursor: pointer;
+  min-width: 0;
+  transition:
+    transform 0.16s var(--hyper-spring),
+    background 0.16s ease,
+    border-color 0.16s ease,
+    box-shadow 0.16s ease;
+}
+
+.codovi-hyperos-tile.compact {
+  min-height: 32px;
+  padding: 5px 9px;
+  justify-content: center;
+  text-align: center;
+}
+
+.codovi-hyperos-tile:active {
+  transform: scale(0.95);
+}
+
+.codovi-hyperos-tile.active {
+  background: var(--accent-soft);
+  border-color: var(--accent-border, var(--accent));
+  font-weight: 700;
+  box-shadow: inset 0 0.5px 0 rgba(255, 255, 255, 0.24);
+}
+
+.codovi-hyperos-tile-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.codovi-hyperos-tile-check {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.codovi-hyperos-popup-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 9px 12px;
+  border-top: 1px solid var(--glass-hairline);
+  background: var(--glass-surface-quiet);
+  flex-shrink: 0;
+}

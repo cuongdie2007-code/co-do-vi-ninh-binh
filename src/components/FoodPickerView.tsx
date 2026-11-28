@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import {
   Ban,
   Banknote,
@@ -11,6 +11,7 @@ import {
   FolderHeart,
   Heart,
   ListChecks,
+  ListFilter,
   MapPin,
   RotateCcw,
   Search,
@@ -37,14 +38,26 @@ import {
   formatDistance,
   getCrispPhotoUrl,
   getEffectivePrice,
+  getEstimatedPriceRangeK,
   getRestaurantOpenStatus,
   getUserAnchorCoords,
   matchesDietaryFilters,
+  matchesPriceSliderRange,
   normalizeShortNeighborhood,
   normalizeVietnameseSearch,
 } from '../utils/restaurantUtils';
+import { TASTE_OPTIONS } from '../data/themes';
 import { playChimeSuccess, playTapTick, spawnCelebrationConfetti } from '../utils/feedbackUtils';
 import { PhotoLuckyWheel } from './PhotoLuckyWheel';
+import {
+  DEFAULT_HANDPICK_FILTERS,
+  HANDPICK_PRICE_BANDS,
+  HANDPICK_TIER_OPTIONS,
+  HandpickFilterAnchorRect,
+  HandpickFilterPopup,
+  HandpickFilterState,
+  countActiveHandpickFilters,
+} from './HandpickFilterPopup';
 
 export type PickerMealSlot = 'any' | 'sang' | 'trua' | 'chieu' | 'toi' | 'dem';
 export type PickerQuickPreset = 'all' | 'top' | 'de' | 'lau' | 'sang' | 'vat' | 'dem' | 'saved';
@@ -125,11 +138,25 @@ export const FoodPickerView: React.FC<FoodPickerViewProps> = ({
 }) => {
   const [spinStyle, setSpinStyle] = useState<'wheel' | 'slot'>('wheel');
   const [showCustomHandpick, setShowCustomHandpick] = useState(false);
-  const [handpickTab, setHandpickTab] = useState<'saved' | 'all'>('saved');
+  const [handpickTab, setHandpickTab] = useState<'saved' | 'all'>(() => {
+    const hasMetaSaved = restaurants.some((r) => {
+      const m = profile.metaById[r.id];
+      return Boolean(m?.favorite || m?.wishlist || m?.visited);
+    });
+    const hasColSaved = (profile.collections || []).some((c) => (c.restaurantIds || []).length > 0);
+    return hasMetaSaved || hasColSaved ? 'saved' : 'all';
+  });
   const [handpickSearch, setHandpickSearch] = useState('');
   const [handpickedIds, setHandpickedIds] = useState<string[]>([]);
   const [excludedIds, setExcludedIds] = useState<string[]>([]);
   const [shuffleSeed, setShuffleSeed] = useState<number>(0);
+
+  const [handpickFilters, setHandpickFilters] = useState<HandpickFilterState>(DEFAULT_HANDPICK_FILTERS);
+  const [showHandpickFilterPopup, setShowHandpickFilterPopup] = useState(false);
+  const [handpickFilterAnchor, setHandpickFilterAnchor] = useState<HandpickFilterAnchorRect | null>(null);
+  const [handpickPortalTarget, setHandpickPortalTarget] = useState<HTMLElement | null>(null);
+  const [handpickDisplayLimit, setHandpickDisplayLimit] = useState(80);
+  const handpickFilterBtnRef = useRef<HTMLButtonElement | null>(null);
 
   const [winner, setWinner] = useState<Restaurant | null>(null);
   const [isSlotSpinning, setIsSlotSpinning] = useState(false);
@@ -146,6 +173,23 @@ export const FoodPickerView: React.FC<FoodPickerViewProps> = ({
     }
     return ids;
   }, [profile.collections]);
+
+  const resolvedIndexed = useMemo<IndexedRestaurant[]>(() => {
+    if (indexedRestaurants && indexedRestaurants.length > 0) {
+      return indexedRestaurants;
+    }
+    const now = new Date();
+    return restaurants.map((r) => ({
+      r,
+      haystack: `${r.title} ${r.categoryName} ${r.address} ${r.neighborhood || ''}`.toLowerCase(),
+      tastes: classifyRestaurantTastes(r),
+      neighborhood: normalizeShortNeighborhood(r),
+      open: getRestaurantOpenStatus(r, now),
+      dietaryOk: matchesDietaryFilters(r, profile, now),
+      distKm: calcDistanceKm(anchor, r.location),
+      personalScore: computePersonalScore(r, profile, anchor, now),
+    }));
+  }, [indexedRestaurants, restaurants, profile, anchor]);
 
   const candidates = useMemo(() => {
     const excludedSet = new Set(excludedIds);
@@ -166,23 +210,7 @@ export const FoodPickerView: React.FC<FoodPickerViewProps> = ({
       return 0;
     };
 
-    const source: IndexedRestaurant[] = indexedRestaurants
-      ? indexedRestaurants
-      : (() => {
-          const now = new Date();
-          return restaurants.map((r) => ({
-            r,
-            haystack: `${r.title} ${r.categoryName} ${r.address} ${r.neighborhood || ''}`.toLowerCase(),
-            tastes: classifyRestaurantTastes(r),
-            neighborhood: normalizeShortNeighborhood(r),
-            open: getRestaurantOpenStatus(r, now),
-            dietaryOk: matchesDietaryFilters(r, profile, now),
-            distKm: calcDistanceKm(anchor, r.location),
-            personalScore: computePersonalScore(r, profile, anchor, now),
-          }));
-        })();
-
-    return source
+    return resolvedIndexed
       .filter((item) => {
         const { r, haystack, foldedHaystack, tastes, open, dietaryOk, distKm } = item;
         if (excludedSet.has(r.id)) return false;
@@ -248,25 +276,14 @@ export const FoodPickerView: React.FC<FoodPickerViewProps> = ({
       }))
       .sort((a, b) => b.score - a.score)
       .map((item) => item.r);
-  }, [indexedRestaurants, restaurants, excludedIds, profile, filters, q, anchor]);
-
-  const savedHandpickPool = useMemo(() => {
-    return restaurants.filter((r) => {
-      if (excludedIds.includes(r.id)) return false;
-      const meta = profile.metaById[r.id];
-      return Boolean(
-        meta?.favorite ||
-          meta?.wishlist ||
-          meta?.visited ||
-          savedCollectionIdSet.has(r.id)
-      );
-    });
-  }, [restaurants, excludedIds, profile.metaById, savedCollectionIdSet]);
+  }, [resolvedIndexed, excludedIds, profile.metaById, filters, q]);
 
   const wheelCandidates = useMemo(() => {
+    const excludedSet = new Set(excludedIds);
     if (handpickedIds.length > 0) {
+      const pickedSet = new Set(handpickedIds);
       const picked = restaurants.filter(
-        (r) => handpickedIds.includes(r.id) && !excludedIds.includes(r.id)
+        (r) => pickedSet.has(r.id) && !excludedSet.has(r.id)
       );
       if (picked.length > 0) return picked;
     }
@@ -281,34 +298,158 @@ export const FoodPickerView: React.FC<FoodPickerViewProps> = ({
     return copy;
   }, [handpickedIds, restaurants, excludedIds, candidates, shuffleSeed]);
 
-  const handpickList = useMemo(() => {
+  const activeHandpickFilterCount = useMemo(
+    () => countActiveHandpickFilters(handpickFilters),
+    [handpickFilters]
+  );
+
+  const { savedFilteredItems, allFilteredItems } = useMemo(() => {
+    const excludedSet = new Set(excludedIds);
     const hq = normalizeVietnameseSearch(handpickSearch);
-    const base =
-      handpickTab === 'saved'
-        ? savedHandpickPool
-        : candidates.length > 0
-        ? candidates
-        : restaurants;
-    if (!hq) return handpickTab === 'saved' ? base : base.slice(0, 60);
-    return base.filter((r) =>
-      normalizeVietnameseSearch(`${r.title} ${r.categoryName} ${r.address}`).includes(hq)
+    const selectedBands = HANDPICK_PRICE_BANDS.filter((b) =>
+      handpickFilters.priceBands.includes(b.key)
     );
-  }, [handpickTab, handpickSearch, savedHandpickPool, candidates, restaurants]);
 
-  const allSavedSelected =
-    savedHandpickPool.length > 0 &&
-    savedHandpickPool.every((r) => handpickedIds.includes(r.id));
+    const matchesItem = (item: IndexedRestaurant) => {
+      const { r, haystack, foldedHaystack, tastes, open, distKm } = item;
+      const meta = profile.metaById[r.id];
+      if (excludedSet.has(r.id) || meta?.blacklisted) return false;
 
-  const toggleSelectAllSaved = () => {
-    if (savedHandpickPool.length === 0) return;
-    const savedIds = savedHandpickPool.map((r) => r.id);
-    if (allSavedSelected) {
-      setHandpickedIds((prev) => prev.filter((id) => !savedIds.includes(id)));
+      if (handpickFilters.onlyOpen && !open.isOpenNow) return false;
+      if (handpickFilters.minRating45 && (r.totalScore ?? 0) < 4.5) return false;
+      if (handpickFilters.popularOnly && (r.reviewsCount ?? 0) < 50) return false;
+      if (handpickFilters.onlyHasPhoto && !r.imageUrl) return false;
+      if (handpickFilters.hasReviews && !(r.reviews && r.reviews.length > 0)) return false;
+      if (handpickFilters.onlyUserAdded && !r.isUserAdded) return false;
+      if (handpickFilters.radiusKm !== null && distKm > handpickFilters.radiusKm) return false;
+
+      const effPrice = getEffectivePrice(r, meta?.customPrice);
+      if (handpickFilters.onlyHasPrice && !effPrice) return false;
+
+      const tierInfo = classifyVenueByPrice(r, meta?.customPrice);
+      if (handpickFilters.studentBudgetOnly) {
+        const inBudget =
+          tierInfo.tier === 'low' || matchesPriceSliderRange(r, meta?.customPrice, 0, 60);
+        if (!inBudget) return false;
+      }
+
+      if (
+        handpickFilters.tiers.length > 0 &&
+        !handpickFilters.tiers.includes(tierInfo.tier)
+      ) {
+        return false;
+      }
+
+      if (selectedBands.length > 0) {
+        const [pMin, pMax] = getEstimatedPriceRangeK(r, meta?.customPrice);
+        const matchesBand = selectedBands.some((b) => pMin <= b.maxK && pMax >= b.minK);
+        if (!matchesBand) return false;
+      }
+
+      if (
+        handpickFilters.tastes.length > 0 &&
+        !handpickFilters.tastes.some((t) => tastes.includes(t))
+      ) {
+        return false;
+      }
+
+      if (hq) {
+        const hayNorm = foldedHaystack || normalizeVietnameseSearch(haystack);
+        if (!hayNorm.includes(hq)) return false;
+      }
+
+      return true;
+    };
+
+    const allMatched = resolvedIndexed.filter(matchesItem);
+
+    allMatched.sort((a, b) => {
+      if (handpickFilters.sortBy === 'nearest') {
+        return a.distKm - b.distKm;
+      }
+      if (handpickFilters.sortBy === 'rating') {
+        const sDiff = (b.r.totalScore ?? 0) - (a.r.totalScore ?? 0);
+        if (sDiff !== 0) return sDiff;
+        return (b.r.reviewsCount ?? 0) - (a.r.reviewsCount ?? 0);
+      }
+      if (handpickFilters.sortBy === 'cheap') {
+        const metaA = profile.metaById[a.r.id];
+        const metaB = profile.metaById[b.r.id];
+        const pDiff =
+          getEstimatedPriceRangeK(a.r, metaA?.customPrice)[0] -
+          getEstimatedPriceRangeK(b.r, metaB?.customPrice)[0];
+        if (pDiff !== 0) return pDiff;
+        return a.distKm - b.distKm;
+      }
+      return b.personalScore - a.personalScore;
+    });
+
+    const savedMatched = allMatched.filter(({ r }) => {
+      const meta = profile.metaById[r.id];
+      return Boolean(
+        meta?.favorite ||
+          meta?.wishlist ||
+          meta?.visited ||
+          savedCollectionIdSet.has(r.id)
+      );
+    });
+
+    return { savedFilteredItems: savedMatched, allFilteredItems: allMatched };
+  }, [
+    resolvedIndexed,
+    excludedIds,
+    handpickSearch,
+    handpickFilters,
+    profile.metaById,
+    savedCollectionIdSet,
+  ]);
+
+  const activeHandpickItems = handpickTab === 'saved' ? savedFilteredItems : allFilteredItems;
+  const visibleHandpickItems = activeHandpickItems.slice(0, handpickDisplayLimit);
+
+  const handpickedIdSet = useMemo(() => new Set(handpickedIds), [handpickedIds]);
+
+  const allActiveMatchedSelected =
+    activeHandpickItems.length > 0 &&
+    activeHandpickItems.every((item) => handpickedIdSet.has(item.r.id));
+
+  const toggleSelectAllMatched = useCallback(() => {
+    if (activeHandpickItems.length === 0) return;
+    const matchIds = activeHandpickItems.map((item) => item.r.id);
+    const matchSet = new Set(matchIds);
+    playTapTick(profile.glass.soundEnabled ?? true);
+    if (allActiveMatchedSelected) {
+      setHandpickedIds((prev) => prev.filter((id) => !matchSet.has(id)));
     } else {
-      setHandpickedIds((prev) => Array.from(new Set([...prev, ...savedIds])));
+      setHandpickedIds((prev) => Array.from(new Set([...prev, ...matchIds])));
     }
     setWinner(null);
-  };
+  }, [activeHandpickItems, allActiveMatchedSelected, profile.glass.soundEnabled]);
+
+  const handleToggleFilterPopup = useCallback(() => {
+    const btn = handpickFilterBtnRef.current;
+    const shell = (btn?.closest('.phone-shell') as HTMLElement | null) || document.body;
+    if (btn && shell) {
+      const br = btn.getBoundingClientRect();
+      const sr = shell.getBoundingClientRect();
+      const rawTop = Math.round(br.bottom - sr.top + 8);
+      const top = Math.max(54, Math.min(rawTop, Math.max(54, sr.height - 310)));
+      const maxHeight = Math.max(240, Math.min(480, sr.height - top - 14));
+      const right = Math.max(12, Math.round(sr.right - br.right));
+      setHandpickPortalTarget(shell);
+      setHandpickFilterAnchor({ top, right, maxHeight });
+    }
+    playTapTick(profile.glass.soundEnabled ?? true);
+    setShowHandpickFilterPopup((v) => !v);
+  }, [profile.glass.soundEnabled]);
+
+  const updateHandpickFilters = useCallback(
+    (updater: React.SetStateAction<HandpickFilterState>) => {
+      setHandpickFilters(updater);
+      setHandpickDisplayLimit(80);
+    },
+    []
+  );
 
   const handleSpinSlot = () => {
     const pool = wheelCandidates;
@@ -438,6 +579,7 @@ export const FoodPickerView: React.FC<FoodPickerViewProps> = ({
           type="button"
           className={`apple-segment-btn ${spinStyle === 'wheel' && !showCustomHandpick ? 'active' : ''}`}
           onClick={() => {
+            setShowHandpickFilterPopup(false);
             setShowCustomHandpick(false);
             setSpinStyle('wheel');
           }}
@@ -448,6 +590,7 @@ export const FoodPickerView: React.FC<FoodPickerViewProps> = ({
           type="button"
           className={`apple-segment-btn ${spinStyle === 'slot' && !showCustomHandpick ? 'active' : ''}`}
           onClick={() => {
+            setShowHandpickFilterPopup(false);
             setShowCustomHandpick(false);
             setSpinStyle('slot');
           }}
@@ -457,13 +600,16 @@ export const FoodPickerView: React.FC<FoodPickerViewProps> = ({
         <button
           type="button"
           className={`apple-segment-btn ${showCustomHandpick ? 'active' : ''}`}
-          onClick={() => setShowCustomHandpick((v) => !v)}
+          onClick={() => {
+            setShowHandpickFilterPopup(false);
+            setShowCustomHandpick((v) => !v);
+          }}
         >
           <ListChecks size={13} /> Tự chọn ({handpickedIds.length})
         </button>
       </div>
 
-      {/* Custom Handpick Sheet with Dedicated Khu Đã Lưu */}
+      {/* Custom Handpick Sheet with HyperOS Multi-Select Filter Icon */}
       {showCustomHandpick && (
         <div
           className="lg-surface inline-expand-panel"
@@ -472,55 +618,87 @@ export const FoodPickerView: React.FC<FoodPickerViewProps> = ({
             padding: 12,
             display: 'flex',
             flexDirection: 'column',
-            gap: 9,
-            maxHeight: 300,
+            gap: 8,
+            maxHeight: 'min(430px, 58dvh)',
+            overflow: 'hidden',
           }}
         >
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
-            <div style={{ display: 'flex', gap: 5 }}>
+          {/* Row 1: Saved/All Pool Tabs + Quick Select All + HyperOS Filter Icon */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 6, flexShrink: 0 }}>
+            <div style={{ display: 'flex', gap: 5, minWidth: 0, overflowX: 'auto', scrollbarWidth: 'none' }}>
               <button
                 type="button"
                 className={`lg-pill ${handpickTab === 'saved' ? 'active' : ''}`}
-                style={{ minHeight: 28, padding: '2px 10px', fontSize: 11.5 }}
-                onClick={() => setHandpickTab('saved')}
+                style={{ minHeight: 30, padding: '2px 10px', fontSize: 11.5 }}
+                onClick={() => {
+                  setHandpickTab('saved');
+                  setHandpickDisplayLimit(80);
+                }}
               >
-                <Heart size={12} /> Khu Đã Lưu ({savedHandpickPool.length})
+                <Heart size={12} /> Đã lưu ({savedFilteredItems.length})
               </button>
               <button
                 type="button"
                 className={`lg-pill ${handpickTab === 'all' ? 'active' : ''}`}
-                style={{ minHeight: 28, padding: '2px 10px', fontSize: 11.5 }}
-                onClick={() => setHandpickTab('all')}
+                style={{ minHeight: 30, padding: '2px 10px', fontSize: 11.5 }}
+                onClick={() => {
+                  setHandpickTab('all');
+                  setHandpickDisplayLimit(80);
+                }}
               >
-                🍽️ Tất cả quán ({candidates.length || restaurants.length})
+                🍽️ Tất cả ({allFilteredItems.length})
               </button>
             </div>
 
-            {handpickTab === 'saved' && savedHandpickPool.length > 0 && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexShrink: 0 }}>
+              {activeHandpickItems.length > 0 && (
+                <button
+                  type="button"
+                  className={`lg-pill ${allActiveMatchedSelected ? 'active' : ''}`}
+                  style={{ minHeight: 30, padding: '2px 9px', fontSize: 11 }}
+                  onClick={toggleSelectAllMatched}
+                  title="Chọn hoặc bỏ chọn toàn bộ quán đang khớp lọc"
+                >
+                  {allActiveMatchedSelected ? '✓ Đã chọn hết' : `Chọn hết (${activeHandpickItems.length})`}
+                </button>
+              )}
               <button
+                ref={handpickFilterBtnRef}
                 type="button"
-                className={`lg-pill ${allSavedSelected ? 'active' : ''}`}
-                style={{ minHeight: 28, padding: '2px 9px', fontSize: 11 }}
-                onClick={toggleSelectAllSaved}
+                className={`apple-icon-btn ${showHandpickFilterPopup || activeHandpickFilterCount > 0 ? 'active' : ''}`}
+                style={{ width: 34, height: 34 }}
+                onClick={handleToggleFilterPopup}
+                aria-label="Bộ lọc Tự chọn"
+                aria-haspopup="dialog"
+                aria-expanded={showHandpickFilterPopup}
+                title="Mở bộ lọc Tự chọn (nhiều lựa chọn kết hợp)"
               >
-                {allSavedSelected ? '✓ Đã chọn hết Đã lưu' : 'Chọn tất cả Đã lưu'}
+                <ListFilter size={15} />
+                {activeHandpickFilterCount > 0 && (
+                  <span className="icon-badge-dot">{activeHandpickFilterCount}</span>
+                )}
               </button>
-            )}
+            </div>
           </div>
 
-          <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
-            <div style={{ position: 'relative', flex: 1 }}>
-              <Search size={13} style={{ position: 'absolute', left: 10, top: 11, color: 'var(--text-muted)' }} />
+          {/* Row 2: Search Input + Clear Picked + Done */}
+          <div style={{ display: 'flex', gap: 6, alignItems: 'center', flexShrink: 0 }}>
+            <div style={{ position: 'relative', flex: 1, minWidth: 0 }}>
+              <Search size={13} style={{ position: 'absolute', left: 10, top: 10.5, color: 'var(--text-muted)' }} />
               <input
                 className="lg-input"
+                aria-label="Tìm quán trong Tự chọn"
                 style={{ minHeight: 34, padding: '4px 10px 4px 28px', fontSize: 12 }}
                 placeholder={
                   handpickTab === 'saved'
-                    ? 'Tìm trong quán đã lưu của bạn...'
-                    : 'Tìm quán để tick đưa vào vòng quay...'
+                    ? 'Tìm trong quán đã lưu của bạn…'
+                    : 'Tìm tên quán, món ăn, đường…'
                 }
                 value={handpickSearch}
-                onChange={(e) => setHandpickSearch(e.target.value)}
+                onChange={(e) => {
+                  setHandpickSearch(e.target.value);
+                  setHandpickDisplayLimit(80);
+                }}
               />
             </div>
             {handpickedIds.length > 0 && (
@@ -537,14 +715,208 @@ export const FoodPickerView: React.FC<FoodPickerViewProps> = ({
               type="button"
               className="lg-pill active"
               style={{ minHeight: 32, padding: '2px 10px', fontSize: 11 }}
-              onClick={() => setShowCustomHandpick(false)}
+              onClick={() => {
+                setShowHandpickFilterPopup(false);
+                setShowCustomHandpick(false);
+              }}
             >
               Xong
             </button>
           </div>
 
-          <div style={{ overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 4 }}>
-            {handpickList.length === 0 ? (
+          {/* Row 3: Active Combinable Filter Chips Summary (compact, removable 1-tap) */}
+          {activeHandpickFilterCount > 0 && (
+            <div
+              className="h-scroll-row"
+              style={{ gap: 5, flexShrink: 0, alignItems: 'center', minHeight: 28, padding: '1px 2px 3px' }}
+            >
+              {handpickFilters.studentBudgetOnly && (
+                <button
+                  type="button"
+                  className="lg-pill active"
+                  style={{ minHeight: 24, padding: '1px 8px', fontSize: 10.5 }}
+                  onClick={() => updateHandpickFilters((f) => ({ ...f, studentBudgetOnly: false }))}
+                >
+                  🎓 SV ≤ 60k <X size={10} />
+                </button>
+              )}
+              {handpickFilters.radiusKm !== null && (
+                <button
+                  type="button"
+                  className="lg-pill active"
+                  style={{ minHeight: 24, padding: '1px 8px', fontSize: 10.5 }}
+                  onClick={() => updateHandpickFilters((f) => ({ ...f, radiusKm: null }))}
+                >
+                  📍 &lt; {handpickFilters.radiusKm}km <X size={10} />
+                </button>
+              )}
+              {handpickFilters.onlyOpen && (
+                <button
+                  type="button"
+                  className="lg-pill active"
+                  style={{ minHeight: 24, padding: '1px 8px', fontSize: 10.5 }}
+                  onClick={() => updateHandpickFilters((f) => ({ ...f, onlyOpen: false }))}
+                >
+                  🟢 Đang mở <X size={10} />
+                </button>
+              )}
+              {handpickFilters.minRating45 && (
+                <button
+                  type="button"
+                  className="lg-pill active"
+                  style={{ minHeight: 24, padding: '1px 8px', fontSize: 10.5 }}
+                  onClick={() => updateHandpickFilters((f) => ({ ...f, minRating45: false }))}
+                >
+                  ⭐ ≥ 4.5★ <X size={10} />
+                </button>
+              )}
+              {handpickFilters.popularOnly && (
+                <button
+                  type="button"
+                  className="lg-pill active"
+                  style={{ minHeight: 24, padding: '1px 8px', fontSize: 10.5 }}
+                  onClick={() => updateHandpickFilters((f) => ({ ...f, popularOnly: false }))}
+                >
+                  🔥 ≥ 50 ĐG <X size={10} />
+                </button>
+              )}
+              {handpickFilters.onlyHasPrice && (
+                <button
+                  type="button"
+                  className="lg-pill active"
+                  style={{ minHeight: 24, padding: '1px 8px', fontSize: 10.5 }}
+                  onClick={() => updateHandpickFilters((f) => ({ ...f, onlyHasPrice: false }))}
+                >
+                  💰 Có giá <X size={10} />
+                </button>
+              )}
+              {handpickFilters.onlyHasPhoto && (
+                <button
+                  type="button"
+                  className="lg-pill active"
+                  style={{ minHeight: 24, padding: '1px 8px', fontSize: 10.5 }}
+                  onClick={() => updateHandpickFilters((f) => ({ ...f, onlyHasPhoto: false }))}
+                >
+                  🖼️ Có ảnh <X size={10} />
+                </button>
+              )}
+              {handpickFilters.hasReviews && (
+                <button
+                  type="button"
+                  className="lg-pill active"
+                  style={{ minHeight: 24, padding: '1px 8px', fontSize: 10.5 }}
+                  onClick={() => updateHandpickFilters((f) => ({ ...f, hasReviews: false }))}
+                >
+                  💬 Có review <X size={10} />
+                </button>
+              )}
+              {handpickFilters.onlyUserAdded && (
+                <button
+                  type="button"
+                  className="lg-pill active"
+                  style={{ minHeight: 24, padding: '1px 8px', fontSize: 10.5 }}
+                  onClick={() => updateHandpickFilters((f) => ({ ...f, onlyUserAdded: false }))}
+                >
+                  ➕ Tự thêm <X size={10} />
+                </button>
+              )}
+              {handpickFilters.tiers.map((tierKey) => {
+                const tOpt = HANDPICK_TIER_OPTIONS.find((x) => x.key === tierKey);
+                return (
+                  <button
+                    key={`act-tier-${tierKey}`}
+                    type="button"
+                    className="lg-pill active"
+                    style={{ minHeight: 24, padding: '1px 8px', fontSize: 10.5 }}
+                    onClick={() =>
+                      updateHandpickFilters((f) => ({
+                        ...f,
+                        tiers: f.tiers.filter((x) => x !== tierKey),
+                      }))
+                    }
+                  >
+                    {tOpt?.label || tierKey} <X size={10} />
+                  </button>
+                );
+              })}
+              {handpickFilters.priceBands.map((bandKey) => {
+                const bOpt = HANDPICK_PRICE_BANDS.find((x) => x.key === bandKey);
+                return (
+                  <button
+                    key={`act-band-${bandKey}`}
+                    type="button"
+                    className="lg-pill active"
+                    style={{ minHeight: 24, padding: '1px 8px', fontSize: 10.5 }}
+                    onClick={() =>
+                      updateHandpickFilters((f) => ({
+                        ...f,
+                        priceBands: f.priceBands.filter((x) => x !== bandKey),
+                      }))
+                    }
+                  >
+                    {bOpt?.label || bandKey} <X size={10} />
+                  </button>
+                );
+              })}
+              {handpickFilters.tastes.map((tasteKey) => {
+                const tOpt = TASTE_OPTIONS.find((x) => x.key === tasteKey);
+                return (
+                  <button
+                    key={`act-taste-${tasteKey}`}
+                    type="button"
+                    className="lg-pill active"
+                    style={{ minHeight: 24, padding: '1px 8px', fontSize: 10.5 }}
+                    onClick={() =>
+                      updateHandpickFilters((f) => ({
+                        ...f,
+                        tastes: f.tastes.filter((x) => x !== tasteKey),
+                      }))
+                    }
+                  >
+                    {tOpt ? `${tOpt.emoji} ${tOpt.label}` : tasteKey} <X size={10} />
+                  </button>
+                );
+              })}
+              {handpickFilters.sortBy !== 'smart' && (
+                <button
+                  type="button"
+                  className="lg-pill active"
+                  style={{ minHeight: 24, padding: '1px 8px', fontSize: 10.5 }}
+                  onClick={() => updateHandpickFilters((f) => ({ ...f, sortBy: 'smart' }))}
+                >
+                  {handpickFilters.sortBy === 'nearest'
+                    ? '📍 Gần nhất'
+                    : handpickFilters.sortBy === 'rating'
+                    ? '⭐ Sao cao'
+                    : '💸 Giá mềm'}{' '}
+                  <X size={10} />
+                </button>
+              )}
+              <button
+                type="button"
+                className="lg-pill"
+                style={{ minHeight: 24, padding: '1px 8px', fontSize: 10.5 }}
+                onClick={() => updateHandpickFilters(DEFAULT_HANDPICK_FILTERS)}
+              >
+                <RotateCcw size={10} /> Đặt lại
+              </button>
+            </div>
+          )}
+
+          {/* Row 4: Matching Restaurants Checklist */}
+          <div
+            className="codovi-subtle-scroll"
+            style={{
+              flex: '1 1 auto',
+              minHeight: 0,
+              overflowY: 'auto',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 4,
+              paddingRight: 2,
+            }}
+          >
+            {visibleHandpickItems.length === 0 ? (
               <div
                 style={{
                   padding: '14px 10px',
@@ -552,69 +924,168 @@ export const FoodPickerView: React.FC<FoodPickerViewProps> = ({
                   fontSize: 12,
                   color: 'var(--text-secondary)',
                   lineHeight: 1.45,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  gap: 8,
                 }}
               >
-                {handpickTab === 'saved'
-                  ? savedHandpickPool.length === 0
-                    ? 'Chưa có quán nào trong khu Đã lưu. Hãy thả tim ❤️ quán bạn thích hoặc chuyển sang "Tất cả quán" nhé!'
-                    : `Không có quán đã lưu nào khớp "${handpickSearch}".`
-                  : 'Không tìm thấy quán khớp từ khoá.'}
+                <span>
+                  {handpickTab === 'saved'
+                    ? savedFilteredItems.length === 0 && !handpickSearch && activeHandpickFilterCount === 0
+                      ? 'Chưa có quán nào trong khu Đã lưu. Hãy thả tim ❤️ quán bạn thích hoặc xem tab "Tất cả"!'
+                      : 'Không có quán đã lưu nào khớp từ khoá & bộ lọc hiện tại.'
+                    : 'Không tìm thấy quán nào khớp bộ lọc đang kết hợp.'}
+                </span>
+                <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', justifyContent: 'center' }}>
+                  {handpickTab === 'saved' && allFilteredItems.length > 0 && (
+                    <button
+                      type="button"
+                      className="lg-pill active"
+                      style={{ minHeight: 28, padding: '2px 10px', fontSize: 11.5 }}
+                      onClick={() => {
+                        setHandpickTab('all');
+                        setHandpickDisplayLimit(80);
+                      }}
+                    >
+                      Xem {allFilteredItems.length} quán ở Tất cả →
+                    </button>
+                  )}
+                  {(activeHandpickFilterCount > 0 || handpickSearch) && (
+                    <button
+                      type="button"
+                      className="lg-pill"
+                      style={{ minHeight: 28, padding: '2px 10px', fontSize: 11.5 }}
+                      onClick={() => {
+                        setHandpickFilters(DEFAULT_HANDPICK_FILTERS);
+                        setHandpickSearch('');
+                      }}
+                    >
+                      <RotateCcw size={11} /> Đặt lại bộ lọc
+                    </button>
+                  )}
+                </div>
               </div>
             ) : (
-              handpickList.map((r) => {
-                const checked = handpickedIds.includes(r.id);
-                const meta = profile.metaById[r.id];
-                const inCol = savedCollectionIdSet.has(r.id);
-                return (
-                  <button
-                    key={r.id}
-                    type="button"
-                    onClick={() => {
-                      setHandpickedIds((prev) =>
-                        prev.includes(r.id) ? prev.filter((id) => id !== r.id) : [...prev, r.id]
-                      );
-                      setWinner(null);
-                    }}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      gap: 8,
-                      padding: '7px 10px',
-                      borderRadius: 12,
-                      border: checked ? '1px solid var(--accent)' : '1px solid transparent',
-                      background: checked ? 'var(--accent-soft)' : 'rgba(255,255,255,0.04)',
-                      color: 'var(--text-primary)',
-                      fontSize: 12.5,
-                      fontWeight: checked ? 700 : 500,
-                      textAlign: 'left',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 6, minWidth: 0, flex: 1 }}>
-                      {meta?.favorite && <Heart size={11} color="#fb7185" fill="#fb7185" style={{ flexShrink: 0 }} />}
-                      {!meta?.favorite && meta?.wishlist && <Bookmark size={11} color="#38bdf8" style={{ flexShrink: 0 }} />}
-                      {!meta?.favorite && !meta?.wishlist && meta?.visited && (
-                        <CheckCircle2 size={11} color="#4ade80" style={{ flexShrink: 0 }} />
-                      )}
-                      {!meta?.favorite && !meta?.wishlist && !meta?.visited && inCol && (
-                        <FolderHeart size={11} color="var(--accent)" style={{ flexShrink: 0 }} />
-                      )}
-                      <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                        {r.title}
+              <>
+                {visibleHandpickItems.map(({ r, distKm, open }) => {
+                  const checked = handpickedIdSet.has(r.id);
+                  const meta = profile.metaById[r.id];
+                  const inCol = savedCollectionIdSet.has(r.id);
+                  const effPrice = getEffectivePrice(r, meta?.customPrice);
+                  return (
+                    <button
+                      key={r.id}
+                      type="button"
+                      onClick={() => {
+                        setHandpickedIds((prev) =>
+                          prev.includes(r.id) ? prev.filter((id) => id !== r.id) : [...prev, r.id]
+                        );
+                        setWinner(null);
+                      }}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        gap: 8,
+                        padding: '7px 10px',
+                        borderRadius: 12,
+                        border: checked ? '1px solid var(--accent)' : '1px solid transparent',
+                        background: checked ? 'var(--accent-soft)' : 'rgba(255,255,255,0.04)',
+                        color: 'var(--text-primary)',
+                        fontSize: 12.5,
+                        fontWeight: checked ? 700 : 500,
+                        textAlign: 'left',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 7, minWidth: 0, flex: 1 }}>
+                        {meta?.favorite && <Heart size={11} color="#fb7185" fill="#fb7185" style={{ flexShrink: 0 }} />}
+                        {!meta?.favorite && meta?.wishlist && <Bookmark size={11} color="#38bdf8" style={{ flexShrink: 0 }} />}
+                        {!meta?.favorite && !meta?.wishlist && meta?.visited && (
+                          <CheckCircle2 size={11} color="#4ade80" style={{ flexShrink: 0 }} />
+                        )}
+                        {!meta?.favorite && !meta?.wishlist && !meta?.visited && inCol && (
+                          <FolderHeart size={11} color="var(--accent)" style={{ flexShrink: 0 }} />
+                        )}
+                        <div style={{ minWidth: 0, flex: 1 }}>
+                          <div
+                            style={{
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis',
+                              whiteSpace: 'nowrap',
+                            }}
+                          >
+                            {r.title}
+                          </div>
+                          <div
+                            style={{
+                              fontSize: 10.5,
+                              color: 'var(--text-secondary)',
+                              fontWeight: 500,
+                              whiteSpace: 'nowrap',
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis',
+                              marginTop: 1,
+                              fontVariantNumeric: 'tabular-nums',
+                            }}
+                          >
+                            {open.isOpenNow ? '🟢 Mở' : open.state === 'closed' ? '⚪ Đóng' : '🕒 Quán'}
+                            {' · '}
+                            {formatDistance(distKm)}
+                            {effPrice ? ` · ${effPrice}` : ''}
+                          </div>
+                        </div>
+                      </div>
+                      <span
+                        style={{
+                          fontSize: 11,
+                          color: 'var(--text-muted)',
+                          flexShrink: 0,
+                          fontVariantNumeric: 'tabular-nums',
+                        }}
+                      >
+                        {r.totalScore ? `${r.totalScore.toFixed(1)}★` : ''}
                       </span>
-                    </div>
-                    <span style={{ fontSize: 11, color: 'var(--text-muted)', flexShrink: 0 }}>
-                      {r.totalScore ? `${r.totalScore.toFixed(1)}★` : ''}
-                    </span>
-                    {checked && <Check size={14} color="var(--accent)" />}
+                      {checked && <Check size={14} color="var(--accent)" style={{ flexShrink: 0 }} />}
+                    </button>
+                  );
+                })}
+                {activeHandpickItems.length > handpickDisplayLimit && (
+                  <button
+                    type="button"
+                    className="lg-pill"
+                    style={{ minHeight: 30, fontSize: 11.5, alignSelf: 'center', marginTop: 4 }}
+                    onClick={() => setHandpickDisplayLimit((n) => n + 80)}
+                  >
+                    Xem thêm (+{activeHandpickItems.length - handpickDisplayLimit} quán)
                   </button>
-                );
-              })
+                )}
+              </>
             )}
           </div>
         </div>
       )}
+
+      {/* Anchored HyperOS Multi-Select Filter Popup */}
+      <HandpickFilterPopup
+        isOpen={showCustomHandpick && showHandpickFilterPopup}
+        anchorRect={handpickFilterAnchor}
+        portalContainer={handpickPortalTarget}
+        filters={handpickFilters}
+        onChangeFilters={updateHandpickFilters}
+        matchedCount={activeHandpickItems.length}
+        handpickTab={handpickTab}
+        allMatchedCount={allFilteredItems.length}
+        onSwitchToAllTab={() => {
+          setHandpickTab('all');
+          setHandpickDisplayLimit(80);
+        }}
+        onSelectAllMatched={toggleSelectAllMatched}
+        allMatchedSelected={allActiveMatchedSelected}
+        soundEnabled={profile.glass.soundEnabled ?? true}
+        onClose={() => setShowHandpickFilterPopup(false)}
+      />
 
       {/* Wheel / Slot Arena */}
       {candidates.length === 0 && handpickedIds.length === 0 ? (
